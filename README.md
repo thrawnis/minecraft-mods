@@ -41,6 +41,7 @@ If a mod needs anything beyond "drop the jar in", its README has a **Special ins
 | Name | Type | Description | Minecraft | Loader | Folder |
 |------|------|-------------|-----------|--------|--------|
 | Low Fire Texture Pack | Resource pack | Lowers the on-screen fire when you're burning (3 heights × orange/blue/green/purple) | 26.1+ | None | [`low-fire-texture-pack/`](low-fire-texture-pack/) |
+| Low Shield Texture Pack | Resource pack | Smaller, lower shield when carrying and blocking (3 sizes) | 26.1+ | None | [`low-shield-texture-pack/`](low-shield-texture-pack/) |
 
 ## Adding a new mod
 
