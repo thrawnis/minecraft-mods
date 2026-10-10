@@ -25,8 +25,9 @@ minecraft-mods/
 
 ## Installing a mod
 
-1. Install the mod loader the mod requires (Fabric, Forge, or NeoForge — see the mod's README)
-   for the matching Minecraft version.
+1. Install the mod loader the mod requires (Fabric, Forge, or NeoForge) for the matching Minecraft version.
+   Each mod's README has step-by-step loader install instructions (for Fabric, see
+   [Forever Flying's guide](forever-flying/README.md#step-1-install-fabric-one-time)).
 2. Copy the `.jar` from the mod's `release/` folder into your `mods` folder:
    - **Windows:** `%APPDATA%\.minecraft\mods`
    - **macOS:** `~/Library/Application Support/minecraft/mods`
@@ -42,6 +43,7 @@ If a mod needs anything beyond "drop the jar in", its README has a **Special ins
 |------|------|-------------|-----------|--------|--------|
 | Low Fire Texture Pack | Resource pack | Lowers the on-screen fire when you're burning (3 heights × orange/blue/green/purple) | 26.1+ | None | [`low-fire-texture-pack/`](low-fire-texture-pack/) |
 | Low Shield Texture Pack | Resource pack | Smaller, lower shield when carrying and blocking (3 sizes) | 26.1+ | None | [`low-shield-texture-pack/`](low-shield-texture-pack/) |
+| Forever Flying | Mod | Fly in any game mode, pass through blocks (V), Alt+scroll fly speed, no fall/suffocation damage | 26.1, 26.2, 26.3 | Fabric | [`forever-flying/`](forever-flying/) |
 
 ## Adding a new mod
 

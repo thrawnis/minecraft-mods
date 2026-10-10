@@ -1,0 +1,12 @@
+{
+	"required": true,
+	"package": "io.github.thrawnis.foreverflying.client.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"client": [
+		"LevelRendererMixin",
+		"MouseHandlerMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

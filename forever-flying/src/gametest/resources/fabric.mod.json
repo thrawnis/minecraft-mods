@@ -1,0 +1,10 @@
+{
+	"schemaVersion": 1,
+	"id": "foreverflying-test",
+	"version": "1.0.0",
+	"name": "Forever Flying tests",
+	"environment": "*",
+	"entrypoints": {
+		"fabric-client-gametest": ["io.github.thrawnis.foreverflying.test.ForeverFlyingClientGameTest"]
+	}
+}

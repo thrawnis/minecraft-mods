@@ -1,0 +1,72 @@
+plugins {
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
+}
+
+// Minecraft version -> [Fabric API version, fabric.mod.json "minecraft" range, versioned/ folder]
+def targets = [
+	'26.1': ['0.145.1+26.1', '>=26.1 <26.2', 'mc26.1'],
+	'26.2': ['0.161.0+26.2', '>=26.2 <26.3', 'mc26.2+'],
+	'26.3': ['0.162.0+26.3', '>=26.3 <26.4', 'mc26.2+'],
+]
+def mc = project.property('mc')
+def target = targets[mc]
+if (target == null) {
+	throw new GradleException("Unknown Minecraft version '${mc}'. Known: ${targets.keySet()}")
+}
+
+version = "${project.mod_version}+mc${mc}"
+group = project.maven_group
+base.archivesName = 'forever-flying'
+
+loom {
+	splitEnvironmentSourceSets()
+
+	mods {
+		"foreverflying" {
+			sourceSet sourceSets.main
+			sourceSet sourceSets.client
+		}
+	}
+}
+
+// Client code that differs between Minecraft versions
+sourceSets.client.java.srcDir("versioned/${target[2]}/java")
+sourceSets.client.resources.srcDir("versioned/${target[2]}/resources")
+
+dependencies {
+	minecraft "com.mojang:minecraft:${mc}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${target[0]}"
+}
+
+processResources {
+	def props = [version: project.mod_version, minecraft: target[1], loader: project.loader_version]
+	inputs.properties props
+
+	filesMatching("fabric.mod.json") {
+		expand props
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 25
+}
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
+}
+
+// Automated in-game tests: ./gradlew runClientGameTest (needs a display; use xvfb-run on Linux)
+fabricApi {
+	configureTests {
+		createSourceSet = true
+		modId = "foreverflying-test"
+		enableGameTests = false
+		enableClientGameTests = true
+		eula = true // By setting this to true, you agree to the Minecraft EULA.
+	}
+}
+
+// Game test entry point differs between Minecraft versions
+sourceSets.gametest.java.srcDir("versioned/${target[2]}/gametest/java")

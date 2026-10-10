@@ -1,0 +1,9 @@
+{
+	"key.category.foreverflying.main": "Forever Flying",
+	"key.foreverflying.noclip": "Toggle pass through blocks",
+	"key.foreverflying.speed_modifier": "Change fly speed (hold + scroll)",
+	"message.foreverflying.noclip_on": "Pass through blocks: ON (while flying)",
+	"message.foreverflying.noclip_off": "Pass through blocks: OFF",
+	"message.foreverflying.not_on_server": "Forever Flying isn't installed on this server",
+	"message.foreverflying.speed": "Fly speed: %sx"
+}
