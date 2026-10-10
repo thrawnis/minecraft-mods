@@ -40,7 +40,7 @@ If a mod needs anything beyond "drop the jar in", its README has a **Special ins
 
 | Name | Type | Description | Minecraft | Loader | Folder |
 |------|------|-------------|-----------|--------|--------|
-| Low Fire Texture Pack | Resource pack | Lowers the on-screen fire when you're burning (3 heights) | 26.1+ | None | [`low-fire-texture-pack/`](low-fire-texture-pack/) |
+| Low Fire Texture Pack | Resource pack | Lowers the on-screen fire when you're burning (3 heights × orange/blue/green/purple) | 26.1+ | None | [`low-fire-texture-pack/`](low-fire-texture-pack/) |
 
 ## Adding a new mod
 
