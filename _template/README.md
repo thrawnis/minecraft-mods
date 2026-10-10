@@ -7,7 +7,8 @@
 | | |
 |---|---|
 | **Minecraft version** | e.g. 1.21.1 |
-| **Mod loader** | e.g. Fabric 0.16.x / Forge / NeoForge |
+| **Type** | Mod / Resource pack |
+| **Mod loader** | e.g. Fabric 0.16.x / Forge / NeoForge / None (resource pack) |
 | **Java version** | e.g. 21 |
 | **Mod version** | e.g. 1.0.0 |
 | **Side** | Client / Server / Both |
@@ -19,7 +20,8 @@
 
 ## Installation
 
-Drop `release/<mod-name>-<version>.jar` into your `.minecraft/mods` folder, then launch with the loader profile above.
+- **Mod:** drop `release/<mod-name>-<version>.jar` into your `.minecraft/mods` folder, then launch with the loader profile above.
+- **Resource pack:** drop `release/<pack-name>-<version>.zip` into `.minecraft/resourcepacks`, then enable it in Options → Resource Packs.
 
 ## Special instructions
 

@@ -1,6 +1,6 @@
 # Minecraft Mods
 
-A collection of Minecraft **Java Edition** mods. Each mod lives in its own top-level folder.
+A collection of Minecraft **Java Edition** mods and resource (texture) packs. Each one lives in its own top-level folder.
 
 ## Repository layout
 
@@ -11,10 +11,17 @@ minecraft-mods/
 │   └── README.md
 └── <mod-name>/            ← one folder per mod (kebab-case)
     ├── README.md          ← required: install notes, versions, dependencies
-    ├── release/           ← ready-to-use .jar — drop this into your mods folder
-    │   └── <mod-name>-<version>.jar
-    └── src/ …             ← source code / build files (Gradle project)
+    ├── release/           ← ready-to-use file(s) — drop straight into Minecraft
+    │   └── <mod-name>-<version>.jar   (mod → mods folder)
+    │       <pack-name>-<version>.zip  (resource pack → resourcepacks folder)
+    └── src/ …             ← source code / build files
 ```
+
+## Installing a resource pack
+
+1. Copy the `.zip` from the pack's `release/` folder (don't unzip it) into your `resourcepacks` folder
+   (same locations as below, with `resourcepacks` instead of `mods`).
+2. In game: **Options → Resource Packs**, move it to **Selected**, click **Done**.
 
 ## Installing a mod
 
@@ -29,15 +36,15 @@ minecraft-mods/
 
 If a mod needs anything beyond "drop the jar in", its README has a **Special instructions** section.
 
-## Mods
+## Mods & packs
 
-| Mod | Description | Minecraft | Loader | Folder |
-|-----|-------------|-----------|--------|--------|
-| _none yet_ | | | | |
+| Name | Type | Description | Minecraft | Loader | Folder |
+|------|------|-------------|-----------|--------|--------|
+| Low Fire Texture Pack | Resource pack | Lowers the on-screen fire when you're burning (3 heights) | 26.1+ | None | [`low-fire-texture-pack/`](low-fire-texture-pack/) |
 
 ## Adding a new mod
 
 1. Copy `_template/` to a new folder named after the mod in kebab-case (e.g. `better-torches/`).
 2. Fill in the README — especially Minecraft version, loader, dependencies, and any special instructions.
-3. Put the built jar in `release/` (named `<mod-name>-<version>.jar`) and remove older versions.
-4. Add a row to the **Mods** table above.
+3. Put the built jar (mods) or zip (resource packs) in `release/` and remove older versions.
+4. Add a row to the **Mods & packs** table above.
