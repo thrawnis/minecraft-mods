@@ -1,0 +1,21 @@
+# Gradle / build output (built jars for distribution go in <mod>/release/)
+.gradle/
+build/
+out/
+bin/
+run/
+logs/
+
+# IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.classpath
+.project
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
