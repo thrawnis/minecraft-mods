@@ -1,0 +1,10 @@
+{
+	"schemaVersion": 1,
+	"id": "shieldhighlighter-test",
+	"version": "1.0.0",
+	"name": "Shield Highlighter tests",
+	"environment": "*",
+	"entrypoints": {
+		"fabric-client-gametest": ["io.github.thrawnis.shieldhighlighter.test.ShieldHighlighterClientGameTest"]
+	}
+}

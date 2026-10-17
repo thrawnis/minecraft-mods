@@ -1,0 +1,22 @@
+{
+	"schemaVersion": 1,
+	"id": "shieldhighlighter",
+	"version": "${version}",
+	"name": "Shield Highlighter",
+	"description": "Other players' shields glow bright green while usable and dark red while disabled (e.g. by an axe).",
+	"authors": ["thrawnis"],
+	"contact": {
+		"sources": "https://github.com/thrawnis/minecraft-mods"
+	},
+	"environment": "client",
+	"entrypoints": {
+		"client": ["io.github.thrawnis.shieldhighlighter.ShieldHighlighter"]
+	},
+	"mixins": ["shieldhighlighter.mixins.json"],
+	"depends": {
+		"fabricloader": ">=${loader}",
+		"minecraft": "${minecraft}",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}

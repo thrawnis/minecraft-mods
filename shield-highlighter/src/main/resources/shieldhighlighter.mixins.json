@@ -1,0 +1,16 @@
+{
+	"required": true,
+	"package": "io.github.thrawnis.shieldhighlighter.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"client": [
+		"ClientLevelMixin",
+		"EntityRendererMixin",
+		"ItemModelResolverMixin",
+		"ItemStackRenderStateMixin",
+		"MultiPlayerGameModeMixin",
+		"ShieldSpecialRendererMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

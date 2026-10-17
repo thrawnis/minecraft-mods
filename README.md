@@ -45,6 +45,7 @@ If a mod needs anything beyond "drop the jar in", its README has a **Special ins
 | Low Shield Texture Pack | Resource pack | Smaller, lower shield when carrying and blocking (3 sizes) | 26.1+ | None | [`low-shield-texture-pack/`](low-shield-texture-pack/) |
 | Forever Flying | Mod | Fly in any game mode, pass through blocks (V), Alt+scroll fly speed, no fall/suffocation damage | 26.1, 26.2, 26.3 | Fabric | [`forever-flying/`](forever-flying/) |
 | Rainbow Cobwebs | Resource pack | 70%-solid see-through cobwebs that fade blue/red/yellow/green, mixed per web | 26.1+ | None | [`rainbow-cobwebs/`](rainbow-cobwebs/) |
+| Shield Highlighter | Mod | Opponents' shields glow bright green when usable, dark red while disabled (not through walls) | 26.1, 26.2, 26.3 | Fabric | [`shield-highlighter/`](shield-highlighter/) |
 
 ## Adding a new mod
 
