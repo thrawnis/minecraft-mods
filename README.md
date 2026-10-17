@@ -44,6 +44,7 @@ If a mod needs anything beyond "drop the jar in", its README has a **Special ins
 | Low Fire Texture Pack | Resource pack | Lowers the on-screen fire when you're burning (3 heights × orange/blue/green/purple) | 26.1+ | None | [`low-fire-texture-pack/`](low-fire-texture-pack/) |
 | Low Shield Texture Pack | Resource pack | Smaller, lower shield when carrying and blocking (3 sizes) | 26.1+ | None | [`low-shield-texture-pack/`](low-shield-texture-pack/) |
 | Forever Flying | Mod | Fly in any game mode, pass through blocks (V), Alt+scroll fly speed, no fall/suffocation damage | 26.1, 26.2, 26.3 | Fabric | [`forever-flying/`](forever-flying/) |
+| Rainbow Cobwebs | Resource pack | Half see-through cobwebs that fade blue/red/yellow/green, mixed per web | 26.1+ | None | [`rainbow-cobwebs/`](rainbow-cobwebs/) |
 
 ## Adding a new mod
 
