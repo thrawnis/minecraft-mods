@@ -15,13 +15,13 @@ from pathlib import Path
 
 from PIL import Image
 
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 MIN_FORMAT = 84     # resource pack format of Minecraft 26.1
 MAX_FORMAT = 1000   # no upper bound, so newer versions don't flag it as incompatible
 NS = "rainbowcobwebs"
 
 SIZE = 16
-ALPHA = 128            # 50% see-through
+ALPHA = 179            # 70% solid (30% see-through)
 SECONDS_PER_COLOUR = 3
 COLOURS = {            # in fade order
     "blue": (40, 110, 255),
