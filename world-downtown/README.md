@@ -111,7 +111,7 @@ The world generation itself wasn't run here, because the map-data servers aren't
 ## Building from source
 
 ```bash
-cd la-nyc-world
+cd world-downtown
 python3 src/generate.py
 ```
 
