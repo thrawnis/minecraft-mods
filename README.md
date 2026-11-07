@@ -1,41 +1,6 @@
 # Minecraft Mods
 
-A collection of Minecraft **Java Edition** mods and resource (texture) packs. Each one lives in its own top-level folder.
-
-## Repository layout
-
-```
-minecraft-mods/
-├── README.md              ← this file (index of all mods)
-├── _template/             ← copy this to start a new mod folder
-│   └── README.md
-└── <mod-name>/            ← one folder per mod (kebab-case)
-    ├── README.md          ← required: install notes, versions, dependencies
-    ├── release/           ← ready-to-use file(s) — drop straight into Minecraft
-    │   └── <mod-name>-<version>.jar   (mod → mods folder)
-    │       <pack-name>-<version>.zip  (resource pack → resourcepacks folder)
-    └── src/ …             ← source code / build files
-```
-
-## Installing a resource pack
-
-1. Copy the `.zip` from the pack's `release/` folder (don't unzip it) into your `resourcepacks` folder
-   (same locations as below, with `resourcepacks` instead of `mods`).
-2. In game: **Options → Resource Packs**, move it to **Selected**, click **Done**.
-
-## Installing a mod
-
-1. Install the mod loader the mod requires (Fabric, Forge, or NeoForge) for the matching Minecraft version.
-   Each mod's README has step-by-step loader install instructions (for Fabric, see
-   [Forever Flying's guide](forever-flying/README.md#step-1-install-fabric-one-time)).
-2. Copy the `.jar` from the mod's `release/` folder into your `mods` folder:
-   - **Windows:** `%APPDATA%\.minecraft\mods`
-   - **macOS:** `~/Library/Application Support/minecraft/mods`
-   - **Linux:** `~/.minecraft/mods`
-3. Install any additional dependencies listed in the mod's README (e.g. Fabric API).
-4. Launch Minecraft using the loader's profile.
-
-Every folder's README has full step-by-step **Installation** and **Usage** sections (including installing Fabric for mods), plus **Special instructions** for anything unusual.
+A collection of Minecraft **Java Edition** mods, resource (texture) packs and maps. Each one lives in its own folder, and its README explains how to install and use it.
 
 ## Mods & packs
 
@@ -47,10 +12,3 @@ Every folder's README has full step-by-step **Installation** and **Usage** secti
 | Rainbow Cobwebs | Resource pack | 70%-solid see-through cobwebs that fade blue/red/yellow/green, mixed per web | 26.1+ | None | [`rainbow-cobwebs/`](rainbow-cobwebs/) |
 | Shield Highlighter | Mod | Opponents' shields glow bright green when usable, dark red while disabled (not through walls) | 26.1, 26.2, 26.3 | Fabric | [`shield-highlighter/`](shield-highlighter/) |
 | LA & NYC World | World + datapack | Real-size Hollywood, Downtown LA, Griffith Park, LAX, Times Square, Central Park and Statue of Liberty (built on your computer with Arnis), with stations, map menu, tour signs and night lights | 26.1 | None | [`world-downtown/`](world-downtown/) |
-
-## Adding a new mod
-
-1. Copy `_template/` to a new folder named after the mod in kebab-case (e.g. `better-torches/`).
-2. Fill in the README — especially Minecraft version, loader, dependencies, and any special instructions.
-3. Put the built jar (mods) or zip (resource packs) in `release/` and remove older versions.
-4. Add a row to the **Mods & packs** table above.
