@@ -1,0 +1,1 @@
+{"schemaVersion":1,"id":"pktest","version":"1","environment":"*","entrypoints":{"fabric-client-gametest":["pktest.PkTest"]}}

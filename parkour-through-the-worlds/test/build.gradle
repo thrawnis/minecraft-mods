@@ -1,0 +1,35 @@
+// In-game tests for Parkour Through the Worlds (a real Minecraft client runs them).
+//   ./gradlew runClientGameTest                       bot plays the whole course + feature checks
+//   ./gradlew runClientGameTest -Pmakeworld=../release/parkour-through-the-worlds-world-1.0.0.zip
+//   ./gradlew runClientGameTest -Pverifyworld=../release/parkour-through-the-worlds-world-1.0.0.zip
+// Run `python3 ../src/generate.py` first. Needs a display (on Linux without one: xvfb-run -a ./gradlew ...).
+plugins {
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
+}
+def targets = ['26.1': '0.145.1+26.1', '26.2': '0.161.0+26.2', '26.3': '0.162.0+26.3']
+def mc = project.property('mc')
+dependencies {
+	minecraft "com.mojang:minecraft:${mc}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${targets[mc]}"
+}
+tasks.withType(JavaCompile).configureEach { it.options.release = 25 }
+fabricApi {
+	configureTests {
+		createSourceSet = true
+		modId = "pktest"
+		enableGameTests = false
+		enableClientGameTests = true
+		eula = true // By setting this to true, you agree to the Minecraft EULA.
+	}
+}
+def abs = { p -> p ? file(p).absolutePath : '' }
+afterEvaluate {
+	loom.runs.named("clientGameTest").configure {
+		vmArg "-Dpktest.zip=${abs(project.findProperty('zip') ?: '../release/parkour-through-the-worlds-datapack-1.0.0.zip')}"
+		vmArg "-Dpktest.path=${abs(project.findProperty('coursepath') ?: '../src/path.json')}"
+		vmArg "-Dpktest.makeworld=${abs(project.findProperty('makeworld'))}"
+		vmArg "-Dpktest.verifyworld=${abs(project.findProperty('verifyworld'))}"
+		vmArg "-Dpktest.quick=${project.findProperty('quick') ?: 'false'}"
+	}
+}
