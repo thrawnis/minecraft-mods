@@ -25,9 +25,29 @@ Highlights only show for players you can actually see. There's no outline throug
 
 ## Installation
 
-1. **Install Fabric** if you haven't already. Follow the step-by-step guide in [Forever Flying's README](../forever-flying/README.md#step-1-install-fabric-one-time).
-2. **Download Fabric API** for your Minecraft version from https://modrinth.com/mod/fabric-api (**Versions** tab).
-3. **Pick the Shield Highlighter jar** for your Minecraft version from `release/`:
+Three steps: install Fabric once, add the two mod files, then start the game with the Fabric profile. If you already installed Fabric for another mod (like Forever Flying), skip Step 1.
+
+### Step 1: Install Fabric (one-time)
+
+Fabric is a free mod loader. It adds a separate **fabric-loader** profile to the Minecraft launcher, and your normal (unmodded) profile keeps working as before.
+
+1. **Run Minecraft once without mods** for the version you want (for example 26.1), then close it. This makes sure the game and your `.minecraft` folder exist.
+2. **Download the Fabric installer** from https://fabricmc.net/use/installer/
+   - **Windows:** click **Download for Windows** (an `.exe`).
+   - **macOS / Linux:** click **Download universal JAR** (a `.jar`). You need Java to open it; if double-clicking does nothing, install Java 25 from https://adoptium.net/ and try again, or run `java -jar fabric-installer-*.jar` in a terminal.
+3. **Run the installer** and on the **Client** tab:
+   - **Minecraft Version:** choose the version you play (e.g. 26.1).
+   - **Loader Version:** leave it on the newest.
+   - **Launcher Location:** leave the default.
+   - Keep **Create profile** ticked.
+   - Click **Install**, wait for "Successfully installed", then close the installer.
+4. **Open the Minecraft launcher.** Next to the **Play** button, pick the new **fabric-loader-26.1** profile (the number matches your version). If you don't see it, look under **Installations** and make sure it's enabled.
+5. Click **Play** once to check it starts, then close the game. This also creates the `mods` folder.
+
+### Step 2: Add the mod files
+
+1. **Download Fabric API** (needed by almost every Fabric mod) from https://modrinth.com/mod/fabric-api: open the **Versions** tab and download the file for your Minecraft version. If it's already in your `mods` folder, you don't need another copy.
+2. **Pick the Shield Highlighter jar for your Minecraft version** from `release/`:
 
    | Minecraft version | File |
    |---|---|
@@ -35,8 +55,36 @@ Highlights only show for players you can actually see. There's no outline throug
    | 26.2 | `shield-highlighter-1.0.0+mc26.2.jar` |
    | 26.3 | `shield-highlighter-1.0.0+mc26.3.jar` |
 
-4. Put **both jars** into your `mods` folder (`%APPDATA%\.minecraft\mods` on Windows, `~/Library/Application Support/minecraft/mods` on macOS, `~/.minecraft/mods` on Linux).
-5. Start Minecraft with the **fabric-loader** profile.
+3. **Put both jars** (Fabric API and Shield Highlighter) into your `mods` folder. Don't unzip them. Create the folder if it doesn't exist:
+   - **Windows:** press **Win + R**, type `%APPDATA%\.minecraft\mods`, press Enter.
+   - **macOS:** in Finder, **Go → Go to Folder…**, type `~/Library/Application Support/minecraft/mods`.
+   - **Linux:** `~/.minecraft/mods`
+
+### Step 3: Play
+
+Start the launcher, select the **fabric-loader** profile, click **Play**. Servers don't need the mod, so you can join any server as usual.
+
+### Troubleshooting
+
+- **The game says a mod needs a different Minecraft version, or "Incompatible mods found":** the Shield Highlighter or Fabric API jar doesn't match your Minecraft version. Download the matching ones and remove the others from `mods`.
+- **"requires fabric-api":** Fabric API is missing from `mods`.
+- **No fabric-loader profile in the launcher:** run the Fabric installer again and make sure **Create profile** is ticked and the launcher was closed while installing.
+
+## Usage
+
+There's nothing to press: the mod works whenever you're near other players.
+
+| You see | It means |
+|---|---|
+| Bright green outline and green shield | They hold a shield that can block right now. Hitting them will be blocked if they raise it. |
+| Dark red outline and red shield | Their shield is disabled (e.g. you or someone else hit it with an axe). Attack now: they can't block until it turns green again. |
+| No highlight | They aren't holding a shield, or you can't see them (they're behind blocks). |
+
+**Typical PvP use:** when an opponent turns green and raises their shield, hit it with an **axe** to disable it. They turn dark red; switch to your sword and attack until they turn green again (about 5 seconds with a normal axe).
+
+**Try it out:** you need another player, for example a friend on a LAN world (**Esc → Open to LAN**) or any server. Give them a shield and hit it with an axe.
+
+**Turn it off / remove it:** pick your normal (not fabric-loader) profile in the launcher, or delete the Shield Highlighter jar from your `mods` folder.
 
 ## Special instructions
 

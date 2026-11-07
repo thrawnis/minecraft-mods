@@ -103,6 +103,36 @@ Open Minecraft **26.1**, go to **Singleplayer**, and open **LA and NYC**. If it 
 
 A few seconds after it loads, chat says **"LA & NYC: stations and tour signs are ready."** You start in Hollywood, by the station on Hollywood Blvd. Press its button to open the map menu.
 
+## Usage
+
+You start in **Hollywood**, next to the station on Hollywood Blvd, in creative mode. Double-tap **Space** to fly.
+
+**Travel between places:**
+1. Walk up to a station: a small stone wall with two glowing lanterns and a sign saying **Station**.
+2. Press the **button** on the wall (right-click it). A **map menu** pops up with all ten destinations.
+3. Click where you want to go. You arrive in front of that place's station.
+4. Click **Close**, or press **Esc**, to close the menu without going anywhere.
+
+Without walking to a station, type `/function lanyc:menu` to open the same menu anywhere, or `/function lanyc:go/<station>` to go straight there (for example `/function lanyc:go/empire_state`).
+
+| Station | What's there |
+|---|---|
+| Hollywood | Hollywood Blvd & Highland: TCL Chinese Theatre, Dolby Theatre, Walk of Fame |
+| Hollywood Sign | The hillside below the sign |
+| Griffith Observatory | The lawn in front of the observatory |
+| Downtown LA | Grand Park, near City Hall and the Walt Disney Concert Hall |
+| LAX Terminals | Tom Bradley International Terminal |
+| LAX Theme Building | Next to the Theme Building |
+| Times Square | The Times Square plaza |
+| Empire State roof | On top of the Empire State Building |
+| Central Park | Bethesda Terrace and Fountain |
+| Statue of Liberty | Liberty Island |
+
+**Sightseeing:**
+- **Tour signs** stand at landmarks: look for a sign on a stone post with a name and a short fact. Their text glows at night.
+- **Night lights:** type `/time set night` to see the lamp posts along the main roads light up (`/time set day` to go back). Lamps are added to new streets as you fly around them.
+- **Make a station yours:** if a station is in an awkward spot, stand where you want it and type `/function lanyc:move/<station>`.
+
 ## Special instructions
 
 - **If a station lands somewhere odd**, like on a hillside or in a corner: stand where you'd like it and type `/function lanyc:move/<station>`. The station is rebuilt at your feet, and that becomes the teleport destination. Arnis worlds have cheats on by default, so this works without extra setup. Station names:

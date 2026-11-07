@@ -29,7 +29,19 @@ _None._
    - **Windows:** `%APPDATA%\.minecraft\resourcepacks`
    - **macOS:** `~/Library/Application Support/minecraft/resourcepacks`
    - **Linux:** `~/.minecraft/resourcepacks`
+
+   Tip: in Minecraft, **Options → Resource Packs → Open Pack Folder** opens this folder for you.
 3. In game: **Options → Resource Packs**, move the pack to the **Selected** column, then click **Done**.
+
+## Usage
+
+Once the pack is selected, there's nothing to press: any shield you hold is drawn smaller and lower.
+
+- **Try it out:** hold a shield (put it in your off hand with **F**), then hold **right-click** to raise it and block. Press **F5** to see it in third person too.
+- **Change size:** select a different file in **Options → Resource Packs** and move the old one back to **Available**. You can keep all three files in your `resourcepacks` folder and switch any time.
+- **Turn it off:** **Options → Resource Packs**, move it from **Selected** back to **Available**, then **Done**. To remove it completely, delete the `.zip` from your `resourcepacks` folder.
+- **Pack order:** if you use other resource packs that change the same thing, put this one **above** them in the **Selected** list.
+- **Servers with their own resource pack** may override it while you're on them.
 
 ## Special instructions
 

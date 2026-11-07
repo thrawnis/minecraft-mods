@@ -35,7 +35,7 @@ minecraft-mods/
 3. Install any additional dependencies listed in the mod's README (e.g. Fabric API).
 4. Launch Minecraft using the loader's profile.
 
-If a mod needs anything beyond "drop the jar in", its README has a **Special instructions** section.
+Every folder's README has full step-by-step **Installation** and **Usage** sections (including installing Fabric for mods), plus **Special instructions** for anything unusual.
 
 ## Mods & packs
 

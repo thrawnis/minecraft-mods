@@ -23,7 +23,19 @@ _None._
    - **Windows:** `%APPDATA%\.minecraft\resourcepacks`
    - **macOS:** `~/Library/Application Support/minecraft/resourcepacks`
    - **Linux:** `~/.minecraft/resourcepacks`
+
+   Tip: in Minecraft, **Options → Resource Packs → Open Pack Folder** opens this folder for you.
 2. In game: **Options → Resource Packs**, move it to the **Selected** column, then click **Done**.
+
+## Usage
+
+Once the pack is selected, every cobweb in every world (new or existing) is coloured and see-through. There's nothing to press.
+
+- **Try it out:** in a creative world, take cobwebs from the creative inventory (or type `/give @s cobweb 64` with cheats on) and place a row of them. Wait a few seconds to see them fade from colour to colour, each starting at a different colour.
+- **Where to find them in survival:** mineshafts, woodland mansions, igloo basements and trial chambers.
+- **Turn it off:** **Options → Resource Packs**, move it from **Selected** back to **Available**, then **Done**. To remove it completely, delete the `.zip` from your `resourcepacks` folder.
+- **Pack order:** if you use other resource packs that change the same thing, put this one **above** them in the **Selected** list.
+- **Servers with their own resource pack** may override it while you're on them.
 
 ## Special instructions
 

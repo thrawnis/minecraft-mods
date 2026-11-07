@@ -33,7 +33,19 @@ _None._
    - **Windows:** `%APPDATA%\.minecraft\resourcepacks`
    - **macOS:** `~/Library/Application Support/minecraft/resourcepacks`
    - **Linux:** `~/.minecraft/resourcepacks`
+
+   Tip: in Minecraft, **Options → Resource Packs → Open Pack Folder** opens this folder for you.
 3. In game: **Options → Resource Packs**, move the pack to the **Selected** column, then click **Done**.
+
+## Usage
+
+Once the pack is selected, there's nothing to press: whenever you're on fire, the flames on your screen are lower and in your chosen colour.
+
+- **Try it out:** in a creative world, light a fire with flint and steel and step into it, or stand next to lava. Compare with the pack turned off to see the difference.
+- **Change height or colour:** select a different file in **Options → Resource Packs** and move the old one back to **Available**. You can keep all 12 files in your `resourcepacks` folder and switch any time.
+- **Turn it off:** **Options → Resource Packs**, move it from **Selected** back to **Available**, then **Done**. To remove it completely, delete the `.zip` from your `resourcepacks` folder.
+- **Pack order:** if you use other resource packs that change the same thing, put this one **above** them in the **Selected** list.
+- **Servers with their own resource pack** may override it while you're on them.
 
 ## Special instructions
 

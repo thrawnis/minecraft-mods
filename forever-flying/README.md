@@ -87,6 +87,25 @@ The server needs Fabric and the same two jars.
 - **"requires fabric-api":** Fabric API is missing from `mods`.
 - **No fabric-loader profile in the launcher:** run the Fabric installer again and make sure **Create profile** is ticked and the launcher was closed while installing.
 
+## Usage
+
+| What | How (default keys) |
+|---|---|
+| Start / stop flying | Double-tap **Space** (Jump) |
+| Fly up / down | Hold **Space** / hold **Shift** (Sneak) |
+| Pass through blocks on/off | **V** (only works while flying; a message shows ON or OFF) |
+| Change fly speed | While flying, hold **Left Alt** and **scroll** the mouse wheel (0.25x to 4x; a message shows the speed) |
+
+1. Open any world: survival, adventure or creative.
+2. Double-tap **Space** to take off, just like creative mode.
+3. Press **V** to turn on pass-through, then fly into a wall or down into the ground. You'll move through blocks and see inside them, like spectator mode.
+4. Press **V** again to make blocks solid again. If you're inside a block when you do, you won't take suffocation damage; fly out.
+5. Double-tap **Space** to stop flying. You won't take fall damage, however high you are.
+
+**Change keys:** **Options → Controls → Key Binds**, then scroll to the **Forever Flying** section.
+
+**Turn it off / remove it:** pick your normal (not fabric-loader) profile in the launcher, or delete the Forever Flying jar from your `mods` folder.
+
 ## Special instructions
 
 - **Who can use it:** in singleplayer, it just works. On a server, every player who has Forever Flying installed in their own game can fly and pass through blocks. Players without the mod play normally.
