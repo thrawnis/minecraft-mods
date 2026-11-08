@@ -98,7 +98,7 @@ The server needs Fabric and the same two jars.
 - Each spot gets four TNT, one after another, so the later ones fall into the holes the first ones made. The ground erupts in waves.
 - Everything ends about 10 seconds after you press the Detonator.
 
-**Turn it off / remove it:** remove the Hyper TNT jar from your `mods` folder. Any Hyper TNT blocks already placed disappear from the world when it loads without the mod.
+**Turn it off / remove it:** break any placed Hyper TNT first, then remove the Hyper TNT jar from your `mods` folder. Minecraft may warn about missing blocks when you open a world that used the mod.
 
 ## Special instructions
 
