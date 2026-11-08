@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "hypertnt:block/hyper_tnt_top",
+    "bottom": "hypertnt:block/hyper_tnt_bottom",
+    "side": "hypertnt:block/hyper_tnt_side"
+  }
+}

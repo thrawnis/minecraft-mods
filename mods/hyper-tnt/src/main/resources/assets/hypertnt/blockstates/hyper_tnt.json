@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "hypertnt:block/hyper_tnt" }
+  }
+}
