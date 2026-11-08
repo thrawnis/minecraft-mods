@@ -100,7 +100,7 @@ If an older version is in that folder (`la-nyc-teleport-1.0.0.zip` or `-2.0.0.zi
 
 ### Step 4: Play
 
-Open Minecraft **26.1**, go to **Singleplayer**, and open **LA and NYC**. If it warns that the world was made with an older version, click to continue (consider making a backup first, as it suggests).
+**Before the first time you play, convert the world:** in Minecraft **26.1**, go to **Singleplayer**, select **LA and NYC**, then click **Edit → Optimize World → Create Backup and Optimize**, and wait for it to finish. See *If it runs slowly or freezes* below for why. Then open **LA and NYC**.
 
 A few seconds after it loads, chat says **"LA & NYC: stations and tour signs are ready."** You start in Hollywood, by the station on Hollywood Blvd. Press its button to open the map menu.
 
@@ -139,19 +139,30 @@ This is a very big world:
 - **Seven city areas** of about 10 km² each.
 - **Building interiors.**
 - **Extra-tall height:** Arnis's One World mode always makes the world about 4,000 blocks tall, instead of Minecraft's normal 384.
+- **An older Minecraft format:** Arnis saves worlds in Minecraft 1.21.1's format. 26.1 then converts each part of the city the first time you go near it, while you're playing, which causes heavy lag and freezes.
 
-All of that needs more memory and power than Minecraft's default settings allow. Try these, in order:
+Do these, in order:
 
-1. **Give Minecraft more memory.** In the Minecraft launcher:
+1. **Convert the whole world once, before playing (most important).** This is what the "needs to be upgraded" message is about.
+   1. Open Minecraft 26.1 and click **Singleplayer**.
+   2. Click **LA and NYC** once to select it (don't open it), then click **Edit**.
+   3. Click **Optimize World**. Leave **Erase Cached Data** unticked.
+   4. Click **Create Backup and Optimize**, then wait until it finishes. It shows a count of upgraded chunks.
+
+   For a world this size it can take an hour or more, but you only do it once. The backup needs as much disk space as the world.
+2. **Give Minecraft more memory.** In the Minecraft launcher:
    - Go to **Installations**, hover over the profile you play with, click **…** and choose **Edit**.
    - Click **More options**. In **JVM arguments**, change `-Xmx2G` to `-Xmx6G` (with 16 GB of RAM), or `-Xmx8G` (with 32 GB or more).
    - Click **Save**.
-2. **Lower the view distance.** In game, go to **Options → Video Settings**. Set **Render Distance** to **6–8** and **Simulation Distance** to **5**.
-3. **Close other programs** (browsers especially) while playing.
-4. **Wait at first load.** The first time you open the world, Minecraft upgrades it to 26.1 and lights it, which takes a while; give it a few minutes on the loading screen. Later loads are faster.
+3. **Make sure Minecraft uses your graphics card**, not the processor's built-in graphics.
+   - **Check it:** in game, press **F3** and look for the **Display** line on the right. It should name your graphics card (for example NVIDIA GeForce RTX 3070), not AMD Radeon or Intel graphics.
+   - **If it doesn't, on Windows:**
+     - Plug the monitor into the graphics card, not the motherboard.
+     - Go to **Settings → System → Display → Graphics**, add Minecraft's Java (`javaw.exe`), and set it to **High performance**.
+4. **Lower the view distance.** In game, go to **Options → Video Settings**. Set **Render Distance** to **6–8** and **Simulation Distance** to **5**.
 5. **Teleport, don't fly far.** Flying fast across the city makes Minecraft load lots of new chunks at once. The stations load just the area around your destination.
 
-If it still freezes, the world itself has to be made lighter, for example one normal-height world per city or smaller areas. Ask and I'll set that up.
+If it still freezes after all of this, the world itself has to be made lighter, for example one normal-height world per city or smaller areas. Ask and I'll set that up.
 
 ## Special instructions
 
