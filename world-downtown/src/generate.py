@@ -8,8 +8,6 @@ blocks the stations and tour signs land on, and bakes those into the datapack.
 What the datapack does in game:
 - Teleport stations: one button each, which opens a map menu (a dialog) of every station.
 - Tour signs at landmarks (name + short fact), on solid ground near the landmark.
-- Night lights: as you explore, lamp posts that switch on at night are added along the
-  sidewalks of wide (main) roads, unless Arnis already put a lamp there.
 
 Run: python3 src/generate.py
 """
@@ -18,7 +16,7 @@ import math
 import zipfile
 from pathlib import Path
 
-VERSION = "2.0.0"
+VERSION = "2.1.0"
 NS = "lanyc"
 PACK_NAME = f"la-nyc-teleport-{VERSION}"
 DATA_FORMAT = 101  # data pack format of Minecraft 26.1
@@ -96,18 +94,12 @@ SIGNS = [
     (40.69950, -74.03960, ["Ellis Island", "Immigration", "station", "1892-1954"]),
 ]
 
-# Block tags (what counts as ground, sidewalk, road) — Arnis's surface blocks.
+# Block tags: what counts as solid ground to build on (Arnis's surface blocks), and air.
 GROUND = ["grass_block", "dirt", "coarse_dirt", "podzol", "dirt_path", "sand", "gravel",
           "smooth_stone", "gray_concrete", "light_gray_concrete", "gray_concrete_powder",
           "cyan_terracotta", "black_concrete", "white_concrete", "yellow_concrete",
           "stone_bricks", "polished_andesite", "moss_block", "rooted_dirt"]
-SIDEWALK = ["smooth_stone", "gray_concrete", "light_gray_concrete", "polished_andesite", "stone_bricks"]
-ASPHALT = ["gray_concrete_powder", "cyan_terracotta", "black_concrete", "white_concrete", "yellow_concrete"]
 HOLLOW = ["air", "cave_air", "void_air"]
-LAMP_TOP = ["iron_trapdoor", "daylight_detector"]  # Arnis's lamps / ours
-LAMP_CHUNK_RADIUS = 2  # chunks around each player checked for lamps
-LAMP_CHUNKS_PER_RUN = 2  # how many new chunks get lamps per run (every 10 ticks)
-ROAD_CHECKS = (2, 6, 10)  # road must be asphalt at these distances: about 9+ blocks wide
 
 # Same as Arnis src/projection/web_mercator.rs
 EARTH_RADIUS = 6_371_000.0
@@ -163,7 +155,8 @@ def functions():
         f"scoreboard objectives add {NS}_go trigger",
         "scoreboard players set #16 lanyc 16",
         f"execute unless data storage {NS}:state {{built:1b}} run function {NS}:setup",
-        f"schedule function {NS}:lamps/loop 10t replace",
+        "# Version 2.0.0 had a night-lights loop; make sure it's stopped in worlds upgraded from it.",
+        f"schedule clear {NS}:lamps/loop",
     ]
     f["setup"] = ["# Load each station's and sign's chunk while they are built."]
     f["setup"] += sorted({f"forceload add {x} {z}" for _, x, z, _ in targets})
@@ -267,69 +260,6 @@ def functions():
             f"setblock ~ ~1 ~ oak_sign[rotation=0]{{is_waxed:1b,front_text:{side},back_text:{side}}}",
         ]
 
-    # Night lights
-    f["lamps/loop"] = [
-        f"execute as @a at @s run function {NS}:lamps/around",
-        f"schedule function {NS}:lamps/loop 10t replace",
-    ]
-    f["lamps/around"] = [
-        "# Check the chunks around this player; give a few new ones lamps.",
-        f"scoreboard players set #done {NS} 0",
-        f"execute store result score #cx {NS} run data get entity @s Pos[0]",
-        f"execute store result score #cz {NS} run data get entity @s Pos[2]",
-        f"scoreboard players operation #cx {NS} /= #16 {NS}",
-        f"scoreboard players operation #cz {NS} /= #16 {NS}",
-    ]
-    for dx, dz in spiral_offsets(LAMP_CHUNK_RADIUS):
-        if max(abs(dx), abs(dz)) > LAMP_CHUNK_RADIUS:
-            continue
-        f["lamps/around"] += [
-            f"execute if score #done {NS} matches {LAMP_CHUNKS_PER_RUN}.. run return 0",
-            f"scoreboard players operation #x {NS} = #cx {NS}",
-            f"scoreboard players {'add' if dx >= 0 else 'remove'} #x {NS} {abs(dx)}",
-            f"scoreboard players operation #x {NS} *= #16 {NS}",
-            f"scoreboard players operation #z {NS} = #cz {NS}",
-            f"scoreboard players {'add' if dz >= 0 else 'remove'} #z {NS} {abs(dz)}",
-            f"scoreboard players operation #z {NS} *= #16 {NS}",
-            f"execute store result storage {NS}:tmp x int 1 run scoreboard players get #x {NS}",
-            f"execute store result storage {NS}:tmp z int 1 run scoreboard players get #z {NS}",
-            f"execute store result score #r {NS} run function {NS}:lamps/chunk with storage {NS}:tmp",
-            f"scoreboard players operation #done {NS} += #r {NS}",
-        ]
-    f["lamps/chunk"] = [
-        f'$execute if data storage {NS}:lamps done."$(x)_$(z)" run return 0',
-        "$execute unless loaded $(x) 0 $(z) run return 0",
-        f'$data modify storage {NS}:lamps done."$(x)_$(z)" set value 1b',
-        f"$execute positioned $(x) 0 $(z) run function {NS}:lamps/scan",
-        "return 1",
-    ]
-    columns = [(dx, dz) for dx in range(16) for dz in range(16)]
-    f["lamps/scan"] = ["# Skip chunks that already have a lamp (Arnis's or ours)."]
-    f["lamps/scan"] += [
-        f"execute positioned ~{dx + 0.5} 0 ~{dz + 0.5} positioned over motion_blocking_no_leaves "
-        f"if block ~ ~-1 ~ #{NS}:lamp_top run return 0" for dx, dz in columns]
-    f["lamps/scan"] += ["# Put one lamp on the first sidewalk beside a main road."]
-    f["lamps/scan"] += [
-        f"execute positioned ~{dx + 0.5} 0 ~{dz + 0.5} positioned over motion_blocking_no_leaves "
-        f"if function {NS}:lamps/try run return 1" for dx, dz in columns]
-    f["lamps/try"] = [
-        f"execute unless block ~ ~-1 ~ #{NS}:sidewalk run return fail",
-        f"execute if block ~ ~-3 ~ #{NS}:hollow run return fail",
-    ]
-    for d, (ux, uz) in {"n": (0, -1), "s": (0, 1), "e": (1, 0), "w": (-1, 0)}.items():
-        f["lamps/try"].append(f"execute if function {NS}:lamps/road_{d} run return run function {NS}:lamps/place")
-        f[f"lamps/road_{d}"] = [
-            f"execute positioned ~{ux * k} ~ ~{uz * k} positioned over motion_blocking_no_leaves "
-            f"unless block ~ ~-1 ~ #{NS}:asphalt run return fail" for k in ROAD_CHECKS] + ["return 1"]
-    f["lamps/try"].append("return fail")
-    f["lamps/place"] = [
-        "# Lamp post that switches on at night (inverted daylight sensor on top).",
-        "setblock ~ ~ ~ smooth_stone",
-        "fill ~ ~1 ~ ~ ~3 ~ stone_brick_wall",
-        "setblock ~ ~4 ~ redstone_lamp",
-        "setblock ~ ~5 ~ daylight_detector[inverted=true]",
-        "return 1",
-    ]
     return f
 
 
@@ -354,14 +284,13 @@ def build():
     out.parent.mkdir(exist_ok=True)
     with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:
         z.writestr("pack.mcmeta", json.dumps({"pack": {
-            "description": f"LA & NYC World: stations, tour signs, night lights v{VERSION}",
+            "description": f"LA & NYC World: stations and tour signs v{VERSION}",
             "min_format": DATA_FORMAT,
             "max_format": 1000,
         }}, indent=2))
         z.writestr("data/minecraft/tags/function/load.json", json.dumps({"values": [f"{NS}:load"]}, indent=2))
         z.writestr("data/minecraft/tags/function/tick.json", json.dumps({"values": [f"{NS}:tick"]}, indent=2))
-        for tag, blocks in {"ground": GROUND, "sidewalk": SIDEWALK, "asphalt": ASPHALT,
-                            "hollow": HOLLOW, "lamp_top": LAMP_TOP}.items():
+        for tag, blocks in {"ground": GROUND, "hollow": HOLLOW}.items():
             z.writestr(f"data/{NS}/tags/block/{tag}.json", json.dumps({"values": blocks}, indent=2))
         z.writestr(f"data/{NS}/dialog/menu.json", json.dumps(dialog(), indent=2))
         for name, lines in functions().items():

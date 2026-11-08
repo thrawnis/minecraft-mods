@@ -1,6 +1,6 @@
 # LA & NYC World
 
-A real-size (1 block = 1 metre) Minecraft world with seven areas built from OpenStreetMap data, plus a datapack that adds teleport stations, a map menu, tour signs and night lights.
+A real-size (1 block = 1 metre) Minecraft world with seven areas built from OpenStreetMap data, plus a datapack that adds teleport stations, a map menu and tour signs.
 
 | Area | Covers roughly | Size |
 |---|---|---|
@@ -19,7 +19,6 @@ You build the world on your own computer with [Arnis](https://github.com/louis-e
 - **Ten teleport stations:** Hollywood, Hollywood Sign, Griffith Observatory, Downtown LA, LAX Terminals, LAX Theme Building, Times Square, Empire State roof, Central Park and Statue of Liberty. Each has one button.
 - **Map menu:** the station button opens a pop-up menu listing every station. Click one and you're there, with no confirmation screen. You can also open the menu anywhere with `/function lanyc:menu`.
 - **Tour signs:** 34 signs at landmarks, each with the name and a short fact (e.g. *TCL Chinese Theatre / Opened 1927 / Star handprints*). The text glows, so you can read them at night.
-- **Night lights:** as you explore, lamp posts are added along the sidewalks of main roads, about one per 16 blocks. They switch on at night and off in the day. Side streets don't get them, and neither do spots where Arnis already put a lamp.
 - **Building interiors and extra signage:** Arnis's `--interior` (rooms inside buildings) and `--signage full` (more street and shop signs) are included in the generation commands below.
 
 ## Compatibility
@@ -29,7 +28,7 @@ You build the world on your own computer with [Arnis](https://github.com/louis-e
 | **Type** | World (generated on your computer) + datapack |
 | **Minecraft version** | Java Edition 26.1 (the datapack was tested in 26.1) |
 | **Generator** | Arnis 3.4.0 or newer |
-| **Datapack version** | 2.0.0 |
+| **Datapack version** | 2.1.0 |
 | **Mode** | Creative (sightseeing) |
 
 ## Dependencies
@@ -92,10 +91,12 @@ For example, on Windows the first one would start like:
 
 ### Step 3: Add the datapack
 
-Copy `release/la-nyc-teleport-2.0.0.zip` (don't unzip it) into the world's `datapacks` folder:
+Copy `release/la-nyc-teleport-2.1.0.zip` (don't unzip it) into the world's `datapacks` folder:
 `<saves folder>/LA and NYC/datapacks/`
 
-If you used version 1.0.0 before, **delete `la-nyc-teleport-1.0.0.zip`** from that folder first. Version 2.0.0 builds new stations, but the old three-button stations stay where they are; you can break them in creative.
+If an older version is in that folder (`la-nyc-teleport-1.0.0.zip` or `-2.0.0.zip`), **delete it first**.
+- **Coming from 1.0.0:** version 2 builds new stations, but the old three-button stations stay where they are; you can break them in creative.
+- **Coming from 2.0.0:** any lamp posts its night-lights feature already added stay in the world.
 
 ### Step 4: Play
 
@@ -130,8 +131,27 @@ Without walking to a station, type `/function lanyc:menu` to open the same menu 
 
 **Sightseeing:**
 - **Tour signs** stand at landmarks: look for a sign on a stone post with a name and a short fact. Their text glows at night.
-- **Night lights:** type `/time set night` to see the lamp posts along the main roads light up (`/time set day` to go back). Lamps are added to new streets as you fly around them.
 - **Make a station yours:** if a station is in an awkward spot, stand where you want it and type `/function lanyc:move/<station>`.
+
+## If it runs slowly or freezes
+
+This is a very big world:
+- **Seven city areas** of about 10 km² each.
+- **Building interiors.**
+- **Extra-tall height:** Arnis's One World mode always makes the world about 4,000 blocks tall, instead of Minecraft's normal 384.
+
+All of that needs more memory and power than Minecraft's default settings allow. Try these, in order:
+
+1. **Give Minecraft more memory.** In the Minecraft launcher:
+   - Go to **Installations**, hover over the profile you play with, click **…** and choose **Edit**.
+   - Click **More options**. In **JVM arguments**, change `-Xmx2G` to `-Xmx6G` (with 16 GB of RAM), or `-Xmx8G` (with 32 GB or more).
+   - Click **Save**.
+2. **Lower the view distance.** In game, go to **Options → Video Settings**. Set **Render Distance** to **6–8** and **Simulation Distance** to **5**.
+3. **Close other programs** (browsers especially) while playing.
+4. **Wait at first load.** The first time you open the world, Minecraft upgrades it to 26.1 and lights it, which takes a while; give it a few minutes on the loading screen. Later loads are faster.
+5. **Teleport, don't fly far.** Flying fast across the city makes Minecraft load lots of new chunks at once. The stations load just the area around your destination.
+
+If it still freezes, the world itself has to be made lighter, for example one normal-height world per city or smaller areas. Ask and I'll set that up.
 
 ## Special instructions
 
@@ -139,7 +159,6 @@ Without walking to a station, type `/function lanyc:menu` to open the same menu 
   `hollywood`, `hollywood_sign`, `griffith`, `downtown`, `lax`, `theme_building`, `times_square`, `empire_state`, `central_park`, `liberty`.
 - **Teleport without the menu:** `/function lanyc:go/<station>`, for example `/function lanyc:go/liberty`.
 - **Where things are placed:** stations and signs look for solid ground within 24 blocks of the landmark, avoiding roofs and wall tops. The **Empire State roof** station is placed on top of the building on purpose.
-- **Night lights take a moment.** Lamps are added to the area around you as you explore: about 5 × 5 chunks, a couple of chunks every half second. Fly a little slower to watch them appear.
 - **Opening the world in a newer version** (26.2, 26.3) should also work. The datapack allows newer versions, but it was only tested in 26.1.
 - **Adding more places later:** run Arnis again with the same `--one-world --world-name="LA and NYC"` and a new `--bbox`. New areas join the same world at their real positions.
 
@@ -155,15 +174,12 @@ When the world first loads, the datapack:
 
 **Map menu:** the menu is a Minecraft dialog with one button per station. Each button runs `/trigger lanyc_go`, a command every player may use, so the game doesn't ask "Confirm Command Execution" each time; the datapack then does the teleport.
 
-**Night lights:** as you move, the datapack checks each new chunk near you once. It looks for a sidewalk block (smooth stone or grey concrete) with an asphalt road (Arnis's road blocks) running at least about 9 blocks wide beside it. If it finds one, it adds a lamp post: a redstone lamp topped with an inverted daylight sensor, so it lights up at night.
-
 ## Testing
 
 The datapack was tested in a real 26.1 game, installed into a world as a `.zip`:
 - all ten stations and the tour signs were built on first load, at the computed blocks, and the temporary chunk loading was released afterwards
 - a sign aimed at a fake building landed on the ground outside it, not on its roof or wall
 - pressing a station button opened the map menu, and a real mouse click on **Times Square** teleported there straight away; an earlier version showed a confirmation screen first, so the menu was changed to avoid it
-- on a test street, lamps appeared along a 13-block-wide road and none along a 5-block-wide side street; they were on at midnight and off at noon
 
 The world generation itself wasn't run here, because OpenStreetMap's servers refuse connections from the build environment. So the landmark coordinates are my own, the street-detection rules come from Arnis's source code, and neither has been checked against a real generated world.
 
@@ -177,6 +193,8 @@ python3 src/generate.py
 This rebuilds the datapack zip in `release/` and prints the Arnis commands and station coordinates. To change areas, stations or signs, edit `AREAS`, `STATIONS` and `SIGNS` at the top. If you change the first area, every coordinate changes, so regenerate the world from scratch.
 
 ## Changelog
+
+- **2.1.0**: Removed the night-lights feature: it caused small stutters while exploring. Arnis's own street lamps are unchanged.
 
 - **2.0.0**:
   - Added Griffith Park & Hollywood Sign, LAX, Central Park, and Statue of Liberty & Ellis Island.
