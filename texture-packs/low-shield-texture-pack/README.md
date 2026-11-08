@@ -60,7 +60,7 @@ It replaces the shield's two item models (`models/item/shield.json` for carrying
 Needs Python 3 and Pillow (`pip install pillow`):
 
 ```bash
-cd low-shield-texture-pack
+cd texture-packs/low-shield-texture-pack
 python3 src/generate.py
 ```
 

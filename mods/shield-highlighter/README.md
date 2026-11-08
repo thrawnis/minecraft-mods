@@ -102,7 +102,7 @@ There's nothing to press: the mod works whenever you're near other players.
 Needs Java 25 (e.g. [Temurin 25](https://adoptium.net/)). The Gradle wrapper downloads everything else.
 
 ```bash
-cd shield-highlighter
+cd mods/shield-highlighter
 ./gradlew build -Pmc=26.1     # or 26.2 / 26.3
 # output: build/libs/shield-highlighter-<version>+mc<mc>.jar  → copy to release/
 ```

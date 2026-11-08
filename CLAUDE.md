@@ -1,6 +1,6 @@
 # Repo conventions
 
-- Minecraft Java Edition mods and resource (texture) packs, one top-level folder per project (kebab-case name). Start from `_template/`.
+- Minecraft Java Edition mods, resource (texture) packs and worlds/maps, one folder per project (kebab-case name), grouped by type: `mods/<name>/`, `texture-packs/<name>/`, `worlds/<name>/`. Start from `_template/`.
 - Every project folder MUST have a `README.md` with compatibility table, dependencies, **Installation** (self-contained, step by step, including mod-loader install if needed) and **Usage** (controls/commands, how to try it, how to turn it off) sections, and a "Special instructions" section (state "None — drop-in only" if there are none).
 - Ship ready-to-use files in `<project>/release/` so the user can drop them straight in:
   - Mods: `<name>-<version>.jar` → `.minecraft/mods`

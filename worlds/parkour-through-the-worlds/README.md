@@ -128,7 +128,7 @@ A human player isn't as precise as the bot, so expect some falls on the later zo
 Needs Python 3:
 
 ```bash
-cd parkour-through-the-worlds
+cd worlds/parkour-through-the-worlds
 python3 src/generate.py
 ```
 
@@ -137,7 +137,7 @@ This rebuilds `release/parkour-through-the-worlds-datapack-1.0.0.zip` and `src/p
 **In-game tests** (needs Java 25; the first run downloads Minecraft):
 
 ```bash
-cd parkour-through-the-worlds/test
+cd worlds/parkour-through-the-worlds/test
 ./gradlew runClientGameTest                                                              # bot plays the course
 ./gradlew runClientGameTest -Pmakeworld=../release/parkour-through-the-worlds-world-1.0.0.zip    # rebuild the world zip
 ./gradlew runClientGameTest -Pverifyworld=../release/parkour-through-the-worlds-world-1.0.0.zip  # open it and check it

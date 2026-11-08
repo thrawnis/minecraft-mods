@@ -197,7 +197,7 @@ The world generation itself wasn't run here, because OpenStreetMap's servers ref
 ## Building from source
 
 ```bash
-cd world-downtown
+cd worlds/world-downtown
 python3 src/generate.py
 ```
 

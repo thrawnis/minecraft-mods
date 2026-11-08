@@ -55,7 +55,7 @@ The pack has four animated textures that each cycle through the same colours wit
 Needs Python 3 and Pillow (`pip install pillow`):
 
 ```bash
-cd rainbow-cobwebs
+cd texture-packs/rainbow-cobwebs
 python3 src/generate.py
 ```
 

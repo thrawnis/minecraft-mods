@@ -119,7 +119,7 @@ The server needs Fabric and the same two jars.
 Needs Java 25 (e.g. [Temurin 25](https://adoptium.net/)). The Gradle wrapper downloads everything else.
 
 ```bash
-cd forever-flying
+cd mods/forever-flying
 ./gradlew build -Pmc=26.1     # or 26.2 / 26.3
 # output: build/libs/forever-flying-<version>+mc<mc>.jar  → copy to release/
 ```
