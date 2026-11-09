@@ -1,0 +1,9 @@
+--one-world
+--world-name=LA and NYC
+--signage
+full
+--bbox=34.0856,-118.3524,34.1144,-118.3176
+--spawn-lat
+34.10166
+--spawn-lng
+-118.33869

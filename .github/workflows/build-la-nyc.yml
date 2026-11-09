@@ -1,0 +1,32 @@
+# Rebuilds the LA & NYC world only when its own files change (not READMEs), or on demand.
+name: build-la-nyc
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "worlds/world-downtown/**"
+      - "!worlds/world-downtown/**/*.md"
+      - ".github/workflows/build-la-nyc.yml"
+      - ".github/workflows/build-world.yml"
+      - ".github/scripts/**"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Rebuild even if this version is already released"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  world:
+    uses: ./.github/workflows/build-world.yml
+    with:
+      project: worlds/world-downtown
+      world_name: LA and NYC
+      namespace: lanyc
+      pack_prefix: la-nyc-teleport
+      slug: la-nyc
+      force: ${{ inputs.force == true }}

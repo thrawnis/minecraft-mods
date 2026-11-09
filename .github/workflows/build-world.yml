@@ -11,6 +11,7 @@ on:
       namespace:    { type: string, required: true }   # datapack namespace, e.g. dl
       pack_prefix:  { type: string, required: true }   # e.g. disneyland-datapack
       force:        { type: boolean, default: false }  # rebuild even if this version is released
+      slug:         { type: string, default: "" }      # release/zip name; defaults to the folder name
 
 env:
   ARNIS_REF: v3.4.0
@@ -32,7 +33,8 @@ jobs:
         id: meta
         run: |
           VERSION=$(python3 -c "import re,sys;print(re.search(r'^VERSION = \"(.+)\"', open(sys.argv[1]).read(), re.M).group(1))" "${{ inputs.project }}/src/generate.py")
-          SLUG=$(basename "${{ inputs.project }}")
+          SLUG="${{ inputs.slug }}"
+          [ -n "$SLUG" ] || SLUG=$(basename "${{ inputs.project }}")
           TAG="${SLUG}-world-v${VERSION}"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
@@ -79,9 +81,15 @@ jobs:
       - name: Generate the world
         if: steps.meta.outputs.skip != 'true'
         run: |
-          mapfile -t ARGS < "${{ inputs.project }}/src/arnis-args.txt"
+          # One Arnis run per src/arnis-args*.txt (one argument per line), in order. Worlds made of
+          # several areas use --one-world, so every run adds to the same world in out/.
           mkdir -p out
-          ./arnis/target/release/arnis "${ARGS[@]}" --output-dir out
+          for f in $(ls "${{ inputs.project }}"/src/arnis-args*.txt | sort -V); do
+            echo "::group::Arnis run: $f"
+            mapfile -t ARGS < "$f"
+            ./arnis/target/release/arnis "${ARGS[@]}" --output-dir out
+            echo "::endgroup::"
+          done
           WORLD_DIR=$(dirname "$(find out -maxdepth 2 -name level.dat | head -1)")
           mkdir -p work
           mv "$WORLD_DIR" "work/${{ inputs.world_name }}"

@@ -1,0 +1,5 @@
+--one-world
+--world-name=LA and NYC
+--signage
+full
+--bbox=34.116,-118.3284,34.1448,-118.2936

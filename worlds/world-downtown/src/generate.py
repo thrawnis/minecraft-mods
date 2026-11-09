@@ -19,6 +19,7 @@ from pathlib import Path
 VERSION = "2.1.1"
 NS = "lanyc"
 PACK_NAME = f"la-nyc-teleport-{VERSION}"
+WORLD_NAME = "LA and NYC"
 DATA_FORMAT = 101  # data pack format of Minecraft 26.1
 SEARCH_RADIUS = 24  # how far (blocks) to look for solid ground around a station or sign (loose rule)
 OPEN_SEARCH_RADIUS = 48  # how far to look for open street-level ground first
@@ -311,15 +312,27 @@ def build():
     print("wrote", out)
 
 
-def commands():
-    print("\nArnis commands (run in this order; add --output-dir):")
+def arnis_runs():
+    """One argument list per Arnis run, in order (the first run fixes the world's frame)."""
+    runs = []
     for i, (key, (name, (a, b, c, d))) in enumerate(AREAS.items()):
-        spawn = ""
+        args = ["--one-world", f"--world-name={WORLD_NAME}", "--signage", "full", f"--bbox={a},{b},{c},{d}"]
         if i == 0:
             _, lat, lon, _ = STATIONS["hollywood"]
-            spawn = f" --spawn-lat {lat} --spawn-lng {lon}"
-        print(f'  {name}: --one-world --world-name="LA and NYC" --signage full '
-              f'--bbox="{a},{b},{c},{d}"{spawn}')
+            args += ["--spawn-lat", str(lat), "--spawn-lng", str(lon)]
+        runs.append((name, args))
+    return runs
+
+
+def commands():
+    # The automatic GitHub build runs src/arnis-args-<n>.txt in order (one argument per line).
+    src = Path(__file__).resolve().parent
+    for old in src.glob("arnis-args-*.txt"):
+        old.unlink()
+    print("\nArnis commands (run in this order; add --output-dir):")
+    for i, (name, args) in enumerate(arnis_runs(), 1):
+        (src / f"arnis-args-{i}.txt").write_text("\n".join(args) + "\n")
+        print(f"  {name}: " + " ".join(f'"{x}"' if " " in x else x for x in args))
     print("\nStation block coordinates (before the ground search):")
     for key, (label, lat, lon, _) in STATIONS.items():
         x, z = to_block(lat, lon)
