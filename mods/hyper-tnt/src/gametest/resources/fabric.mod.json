@@ -5,6 +5,6 @@
 	"name": "Hyper TNT tests",
 	"environment": "*",
 	"entrypoints": {
-		"fabric-client-gametest": ["io.github.thrawnis.hypertnt.test.HyperTntClientGameTest"]
+		"fabric-client-gametest": ["mods.hypertnt.test.HyperTntClientGameTest"]
 	}
 }

@@ -4,14 +4,10 @@
 	"version": "${version}",
 	"name": "Forever Flying",
 	"description": "Fly in any game mode, pass through blocks (V), change fly speed (hold Left Alt + scroll). No fall or suffocation damage.",
-	"authors": ["thrawnis"],
-	"contact": {
-		"sources": "https://github.com/thrawnis/minecraft-mods"
-	},
 	"environment": "*",
 	"entrypoints": {
-		"main": ["io.github.thrawnis.foreverflying.ForeverFlying"],
-		"client": ["io.github.thrawnis.foreverflying.client.ForeverFlyingClient"]
+		"main": ["mods.foreverflying.ForeverFlying"],
+		"client": ["mods.foreverflying.client.ForeverFlyingClient"]
 	},
 	"mixins": [
 		"foreverflying.mixins.json",

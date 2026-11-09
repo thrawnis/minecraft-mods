@@ -1,4 +1,4 @@
-package io.github.thrawnis.shieldhighlighter.mixin;
+package mods.shieldhighlighter.mixin;
 
 import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -6,8 +6,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import io.github.thrawnis.shieldhighlighter.ShieldTint;
-import io.github.thrawnis.shieldhighlighter.ShieldTracker;
+import mods.shieldhighlighter.ShieldTint;
+import mods.shieldhighlighter.ShieldTracker;
 import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.world.entity.ItemOwner;

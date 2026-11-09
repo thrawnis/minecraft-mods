@@ -1,11 +1,11 @@
-package io.github.thrawnis.hypertnt.mixin;
+package mods.hypertnt.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import io.github.thrawnis.hypertnt.HyperTnt;
+import mods.hypertnt.HyperTnt;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.block.Block;

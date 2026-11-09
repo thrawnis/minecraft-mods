@@ -134,7 +134,7 @@ xvfb-run -a ./gradlew runClientGameTest -Pmc=26.1   # in-game test (drop xvfb-ru
 python3 src/art/draw_textures.py                     # redraw the textures
 ```
 
-Strike settings (number of TNT, rings, timing, drop height) are at the top of `src/main/java/io/github/thrawnis/hypertnt/Strike.java`.
+Strike settings (number of TNT, rings, timing, drop height) are at the top of `src/main/java/mods/hypertnt/Strike.java`.
 
 ## Changelog
 

@@ -1,4 +1,4 @@
-package io.github.thrawnis.shieldhighlighter;
+package mods.shieldhighlighter;
 
 import java.util.HashMap;
 import java.util.Map;

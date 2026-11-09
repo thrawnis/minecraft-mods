@@ -1,11 +1,11 @@
-package io.github.thrawnis.shieldhighlighter.mixin;
+package mods.shieldhighlighter.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import io.github.thrawnis.shieldhighlighter.ShieldTracker;
+import mods.shieldhighlighter.ShieldTracker;
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;

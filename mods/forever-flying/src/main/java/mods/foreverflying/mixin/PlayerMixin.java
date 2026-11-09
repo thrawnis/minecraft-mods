@@ -1,11 +1,11 @@
-package io.github.thrawnis.foreverflying.mixin;
+package mods.foreverflying.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import io.github.thrawnis.foreverflying.ForeverFlying;
+import mods.foreverflying.ForeverFlying;
 import net.minecraft.world.entity.player.Player;
 
 @Mixin(Player.class)

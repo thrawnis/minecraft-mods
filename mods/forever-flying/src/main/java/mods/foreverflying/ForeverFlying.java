@@ -1,4 +1,4 @@
-package io.github.thrawnis.foreverflying;
+package mods.foreverflying;
 
 import java.util.Set;
 import java.util.UUID;

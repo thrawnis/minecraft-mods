@@ -1,6 +1,6 @@
-package io.github.thrawnis.foreverflying.test;
+package mods.foreverflying.test;
 
-import io.github.thrawnis.foreverflying.client.ForeverFlyingClient;
+import mods.foreverflying.client.ForeverFlyingClient;
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext;
 import net.minecraft.client.player.LocalPlayer;

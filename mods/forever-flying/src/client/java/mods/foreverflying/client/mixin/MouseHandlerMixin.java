@@ -1,11 +1,11 @@
-package io.github.thrawnis.foreverflying.client.mixin;
+package mods.foreverflying.client.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import io.github.thrawnis.foreverflying.client.ForeverFlyingClient;
+import mods.foreverflying.client.ForeverFlyingClient;
 import net.minecraft.client.MouseHandler;
 
 @Mixin(MouseHandler.class)

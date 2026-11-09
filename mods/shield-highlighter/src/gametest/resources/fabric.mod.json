@@ -5,6 +5,6 @@
 	"name": "Shield Highlighter tests",
 	"environment": "*",
 	"entrypoints": {
-		"fabric-client-gametest": ["io.github.thrawnis.shieldhighlighter.test.ShieldHighlighterClientGameTest"]
+		"fabric-client-gametest": ["mods.shieldhighlighter.test.ShieldHighlighterClientGameTest"]
 	}
 }

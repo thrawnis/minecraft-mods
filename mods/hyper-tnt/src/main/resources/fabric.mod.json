@@ -4,13 +4,9 @@
 	"version": "${version}",
 	"name": "Hyper TNT",
 	"description": "A TNT block as powerful as 2,500 TNT, set off only by a remote Detonator: an orbital-strike nuke that rains TNT from the sky.",
-	"authors": ["thrawnis"],
-	"contact": {
-		"sources": "https://github.com/thrawnis/minecraft-mods"
-	},
 	"environment": "*",
 	"entrypoints": {
-		"main": ["io.github.thrawnis.hypertnt.HyperTnt"]
+		"main": ["mods.hypertnt.HyperTnt"]
 	},
 	"mixins": ["hypertnt.mixins.json"],
 	"depends": {

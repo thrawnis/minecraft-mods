@@ -5,6 +5,6 @@
 	"name": "Forever Flying tests",
 	"environment": "*",
 	"entrypoints": {
-		"fabric-client-gametest": ["io.github.thrawnis.foreverflying.test.ForeverFlyingClientGameTest"]
+		"fabric-client-gametest": ["mods.foreverflying.test.ForeverFlyingClientGameTest"]
 	}
 }

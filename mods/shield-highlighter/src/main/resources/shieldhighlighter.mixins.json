@@ -1,6 +1,6 @@
 {
 	"required": true,
-	"package": "io.github.thrawnis.shieldhighlighter.mixin",
+	"package": "mods.shieldhighlighter.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"client": [
 		"ClientLevelMixin",

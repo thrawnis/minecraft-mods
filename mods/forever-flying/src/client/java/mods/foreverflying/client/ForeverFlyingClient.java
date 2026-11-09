@@ -1,7 +1,7 @@
-package io.github.thrawnis.foreverflying.client;
+package mods.foreverflying.client;
 
-import io.github.thrawnis.foreverflying.ForeverFlying;
-import io.github.thrawnis.foreverflying.Payloads;
+import mods.foreverflying.ForeverFlying;
+import mods.foreverflying.Payloads;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;

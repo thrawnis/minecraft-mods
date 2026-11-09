@@ -1,4 +1,4 @@
-package io.github.thrawnis.hypertnt;
+package mods.hypertnt;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;

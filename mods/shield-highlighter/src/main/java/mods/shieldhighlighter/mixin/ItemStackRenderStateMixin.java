@@ -1,4 +1,4 @@
-package io.github.thrawnis.shieldhighlighter.mixin;
+package mods.shieldhighlighter.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import io.github.thrawnis.shieldhighlighter.ShieldTint;
+import mods.shieldhighlighter.ShieldTint;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 
 @Mixin(ItemStackRenderState.class)

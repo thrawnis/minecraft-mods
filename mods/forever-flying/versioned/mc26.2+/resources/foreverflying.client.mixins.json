@@ -1,6 +1,6 @@
 {
 	"required": true,
-	"package": "io.github.thrawnis.foreverflying.client.mixin",
+	"package": "mods.foreverflying.client.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"client": [
 		"CameraMixin",

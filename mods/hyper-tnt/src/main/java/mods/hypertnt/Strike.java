@@ -1,4 +1,4 @@
-package io.github.thrawnis.hypertnt;
+package mods.hypertnt;
 
 import java.util.ArrayList;
 import java.util.HashSet;

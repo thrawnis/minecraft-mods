@@ -1,4 +1,4 @@
-package io.github.thrawnis.foreverflying.test;
+package mods.foreverflying.test;
 
 import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;

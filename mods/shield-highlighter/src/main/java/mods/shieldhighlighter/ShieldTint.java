@@ -1,4 +1,4 @@
-package io.github.thrawnis.shieldhighlighter;
+package mods.shieldhighlighter;
 
 /** Carries a shield tint from the moment an item is prepared for drawing to when it's drawn. */
 public interface ShieldTint {

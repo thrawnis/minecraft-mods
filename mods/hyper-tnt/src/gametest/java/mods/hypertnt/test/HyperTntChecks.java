@@ -1,7 +1,7 @@
-package io.github.thrawnis.hypertnt.test;
+package mods.hypertnt.test;
 
-import io.github.thrawnis.hypertnt.HyperTnt;
-import io.github.thrawnis.hypertnt.Strike;
+import mods.hypertnt.HyperTnt;
+import mods.hypertnt.Strike;
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext;
 import net.minecraft.core.BlockPos;

@@ -1,4 +1,4 @@
-package io.github.thrawnis.shieldhighlighter.test;
+package mods.shieldhighlighter.test;
 
 import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;

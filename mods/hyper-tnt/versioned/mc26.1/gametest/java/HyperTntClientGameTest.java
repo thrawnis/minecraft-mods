@@ -1,4 +1,4 @@
-package io.github.thrawnis.hypertnt.test;
+package mods.hypertnt.test;
 
 import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;

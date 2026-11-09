@@ -1,4 +1,4 @@
-package io.github.thrawnis.foreverflying;
+package mods.foreverflying;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;

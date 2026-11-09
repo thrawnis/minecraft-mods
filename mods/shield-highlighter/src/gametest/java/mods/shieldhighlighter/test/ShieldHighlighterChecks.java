@@ -1,11 +1,11 @@
-package io.github.thrawnis.shieldhighlighter.test;
+package mods.shieldhighlighter.test;
 
 import java.util.UUID;
 
 import com.mojang.authlib.GameProfile;
 
-import io.github.thrawnis.shieldhighlighter.ShieldTracker;
-import io.github.thrawnis.shieldhighlighter.ShieldTracker.Status;
+import mods.shieldhighlighter.ShieldTracker;
+import mods.shieldhighlighter.ShieldTracker.Status;
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext;
 import net.minecraft.client.Minecraft;
