@@ -46,6 +46,20 @@ You build the world on your own computer with [Arnis](https://github.com/louis-e
 
 ## Installation
 
+### Easiest: download the ready-made world
+
+A ready-to-play copy is built automatically on GitHub. All seven areas are in it, it's already converted for 26.1 (so the slow **Optimize World** step below isn't needed), it's named **LA and NYC**, and the datapack is installed with the stations built. You can skip Steps 1–3 below.
+
+1. Open https://github.com/thrawnis/minecraft-mods/releases/tag/la-nyc-world-v2.1.1 and download `la-nyc-world-2.1.1.zip` (about 650 MB; about 1.3 GB once unzipped).
+2. Close Minecraft and unzip it into your saves folder (see the paths in Step 2 below), so you get `saves/LA and NYC/level.dat`.
+3. Open Minecraft **26.1**, click **Singleplayer**, and open **LA and NYC**.
+
+The memory, graphics card and view-distance tips in **If it runs slowly or freezes** still help on this big world.
+
+Map data © OpenStreetMap contributors, available under the Open Database License (ODbL).
+
+To build it yourself instead, follow the steps below.
+
 ### Step 1: Download Arnis
 
 Get the latest release for your system from https://github.com/louis-e/arnis/releases and unzip it.
@@ -142,7 +156,7 @@ This is a very big world:
 
 Do these, in order:
 
-1. **Convert the whole world once, before playing (most important).** This is what the "needs to be upgraded" message is about.
+1. **Convert the whole world once, before playing (most important).** Skip this if you downloaded the ready-made world: it's already converted. This is what the "needs to be upgraded" message is about.
    1. Open Minecraft 26.1 and click **Singleplayer**.
    2. Click **LA and NYC** once to select it (don't open it), then click **Edit**.
    3. Click **Optimize World**. Leave **Erase Cached Data** unticked.
