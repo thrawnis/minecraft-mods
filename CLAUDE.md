@@ -10,3 +10,4 @@
 - Don't commit Mojang's copyrighted assets; use original artwork.
 - Ask the user rather than assume when requirements are unclear (loader, Minecraft version, approach, etc.).
 - When adding or updating a project, update the **Mods & packs** table in the root `README.md`.
+- Keep the owner's personal info out of everything committed (code, tests, metadata, READMEs, release files): no names, usernames, emails or domains. Use neutral package names (`mods.<modid>`), leave `authors`/`contact` out of `fabric.mod.json`, and refer to "this repository's Releases page" instead of a URL with the username.
