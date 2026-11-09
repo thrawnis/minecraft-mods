@@ -28,7 +28,7 @@ You build the world on your own computer with [Arnis](https://github.com/louis-e
 | **Type** | World (generated on your computer) + datapack |
 | **Minecraft version** | Java Edition 26.1 (the datapack was tested in 26.1) |
 | **Generator** | Arnis 3.4.0 or newer |
-| **Datapack version** | 2.1.0 |
+| **Datapack version** | 2.1.1 |
 | **Mode** | Creative (sightseeing) |
 
 ## Dependencies
@@ -91,7 +91,7 @@ For example, on Windows the first one would start like:
 
 ### Step 3: Add the datapack
 
-Copy `release/la-nyc-teleport-2.1.0.zip` (don't unzip it) into the world's `datapacks` folder:
+Copy `release/la-nyc-teleport-2.1.1.zip` (don't unzip it) into the world's `datapacks` folder:
 `<saves folder>/LA and NYC/datapacks/`
 
 If an older version is in that folder (`la-nyc-teleport-1.0.0.zip` or `-2.0.0.zip`), **delete it first**.
@@ -204,6 +204,7 @@ This rebuilds the datapack zip in `release/` and prints the Arnis commands and s
 
 ## Changelog
 
+- **2.1.1**: Stations are placed more reliably at street level: they look for open ground with nothing hollow below (up to 48 blocks away) before falling back, so they no longer land on roofs.
 - **2.1.0**: Removed the night-lights feature: it caused small stutters while exploring. Arnis's own street lamps are unchanged.
 
 - **2.0.0**:

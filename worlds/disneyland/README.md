@@ -17,7 +17,7 @@ _Fan-made map, not affiliated with Disney._
 | **Type** | World (generated on your computer) + datapack |
 | **Minecraft version** | Java Edition 26.1 (the datapack was tested in 26.1) |
 | **Generator** | Arnis 3.4.0 or newer |
-| **Datapack version** | 1.1.0 |
+| **Datapack version** | 1.1.1 |
 | **Mode** | Creative (sightseeing) |
 
 ## Dependencies
@@ -33,6 +33,18 @@ _Fan-made map, not affiliated with Disney._
 - **Size:** small as Arnis worlds go: a few hundred MB, and generation is reasonably quick.
 
 ## Installation
+
+### Easiest: download the ready-made world
+
+A ready-to-play copy is built automatically on GitHub. It's already converted for 26.1, named **Disneyland**, and has the datapack installed with the stations built, so you can skip Steps 1–4 below.
+
+1. Open https://github.com/thrawnis/minecraft-mods/releases/tag/disneyland-world-v1.1.1 and download `disneyland-world-1.1.1.zip` (about 25 MB).
+2. Close Minecraft and unzip it into your saves folder (see the paths in Step 2 below), so you get `saves/Disneyland/level.dat`.
+3. Open Minecraft **26.1**, click **Singleplayer**, and open **Disneyland**.
+
+Map data © OpenStreetMap contributors, available under the Open Database License (ODbL).
+
+To build it yourself instead, follow the steps below.
 
 ### Step 1: Download Arnis
 
@@ -72,7 +84,7 @@ Arnis saves worlds in an older Minecraft format. Converting it once, before play
 ### Step 4: Add the datapack
 
 1. Close Minecraft.
-2. Copy `release/disneyland-datapack-1.1.0.zip` (don't unzip it) into the world's `datapacks` folder: `<saves folder>/Arnis World N/datapacks/`
+2. Copy `release/disneyland-datapack-1.1.1.zip` (don't unzip it) into the world's `datapacks` folder: `<saves folder>/Arnis World N/datapacks/`
 
 ### Step 5: Play
 
@@ -156,6 +168,7 @@ This rebuilds the datapack zip in `release/` and prints the Arnis command and st
 
 ## Changelog
 
+- **1.1.1**: Stations are placed more reliably at street level: they look for open ground with nothing hollow below (up to 48 blocks away) before falling back, so they no longer land on roofs.
 - **1.1.0**: No building interiors (lighter world). The Arnis options are saved in `src/arnis-args.txt`, which the automatic build also uses.
 
 - **1.0.0**: First release.

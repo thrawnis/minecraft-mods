@@ -15,7 +15,7 @@ A real-size Minecraft world of **Laguna Niguel, California** ("LN"). It's built 
 | **Type** | World (generated on your computer) + datapack |
 | **Minecraft version** | Java Edition 26.1 (the datapack was tested in 26.1) |
 | **Generator** | Arnis 3.4.0 or newer |
-| **Datapack version** | 1.1.0 |
+| **Datapack version** | 1.1.1 |
 | **Mode** | Creative (sightseeing) |
 
 ## Dependencies
@@ -70,7 +70,7 @@ Arnis saves worlds in an older Minecraft format. Converting it once, before play
 ### Step 4: Add the datapack
 
 1. Close Minecraft.
-2. Copy `release/ln-datapack-1.1.0.zip` (don't unzip it) into the world's `datapacks` folder: `<saves folder>/Arnis World N/datapacks/`
+2. Copy `release/ln-datapack-1.1.1.zip` (don't unzip it) into the world's `datapacks` folder: `<saves folder>/Arnis World N/datapacks/`
 
 ### Step 5: Play
 
@@ -146,6 +146,7 @@ This rebuilds the datapack zip in `release/` and prints the Arnis command and st
 
 ## Changelog
 
+- **1.1.1**: Stations are placed more reliably at street level: they look for open ground with nothing hollow below (up to 48 blocks away) before falling back, so they no longer land on roofs.
 - **1.1.0**: No building interiors (lighter world). The Arnis options are saved in `src/arnis-args.txt`, which the automatic build also uses.
 
 - **1.0.0**: First release.

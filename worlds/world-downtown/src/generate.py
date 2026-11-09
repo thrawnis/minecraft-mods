@@ -16,11 +16,12 @@ import math
 import zipfile
 from pathlib import Path
 
-VERSION = "2.1.0"
+VERSION = "2.1.1"
 NS = "lanyc"
 PACK_NAME = f"la-nyc-teleport-{VERSION}"
 DATA_FORMAT = 101  # data pack format of Minecraft 26.1
-SEARCH_RADIUS = 24  # how far (blocks) to look for solid ground around a station or sign
+SEARCH_RADIUS = 24  # how far (blocks) to look for solid ground around a station or sign (loose rule)
+OPEN_SEARCH_RADIUS = 48  # how far to look for open street-level ground first
 
 # Areas, in the order they must be generated: the first one fixes the world's frame.
 # min_lat, min_lon, max_lat, max_lon
@@ -180,13 +181,25 @@ def functions():
     ]
 
     # Ground search: nearest column within SEARCH_RADIUS whose top is ground (not a roof).
-    f["find_ground"] = ["# Spiral out from here to the nearest solid ground; fall back to the top block."]
-    for dx, dz in spiral_offsets(SEARCH_RADIUS):
-        f["find_ground"].append(
-            f"execute positioned ~{dx} 0 ~{dz} positioned over motion_blocking_no_leaves "
-            f"if function {NS}:ground_ok run return run function {NS}:found with storage {NS}:tmp")
+    # Spiral out to the nearest open ground. First pass: Arnis's real ground (a thin crust with
+    # open space under it). Second pass: the older, looser rule. Last resort: the top block.
+    f["find_ground"] = ["# Spiral out from here to the nearest open ground."]
+    for check, radius in (("ground_open", OPEN_SEARCH_RADIUS), ("ground_ok", SEARCH_RADIUS)):
+        for dx, dz in spiral_offsets(radius):
+            f["find_ground"].append(
+                f"execute positioned ~{dx} 0 ~{dz} positioned over motion_blocking_no_leaves "
+                f"if function {NS}:{check} run return run function {NS}:found with storage {NS}:tmp")
     f["find_ground"].append(
         f"execute positioned over motion_blocking_no_leaves run function {NS}:found with storage {NS}:tmp")
+    f["ground_open"] = [
+        "# Arnis's ground is a crust a few blocks thick with open space under it. A roof has floors",
+        "# or the ground crust somewhere in the 6-16 blocks below it, so it fails this check.",
+        "execute if block ~ ~-1 ~ #minecraft:replaceable run return fail",
+        "execute if block ~ ~-1 ~ water run return fail",
+        "execute if block ~ ~-1 ~ lava run return fail",
+    ] + [f"execute unless block ~ ~-{d} ~ #{NS}:hollow run return fail" for d in (6, 8, 10, 12, 14, 16)] + [
+        "return 1",
+    ]
     f["found"] = [f"$function {NS}:put/$(id)"]
     f["ground_ok"] = [
         "# Standing here: ground underfoot, and solid below it (a roof has rooms or air under it).",
