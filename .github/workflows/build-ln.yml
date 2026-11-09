@@ -1,0 +1,31 @@
+# Rebuilds the LN world only when its own files change (not READMEs), or on demand.
+name: build-ln
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "worlds/ln/**"
+      - "!worlds/ln/**/*.md"
+      - ".github/workflows/build-ln.yml"
+      - ".github/workflows/build-world.yml"
+      - ".github/scripts/**"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Rebuild even if this version is already released"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  world:
+    uses: ./.github/workflows/build-world.yml
+    with:
+      project: worlds/ln
+      world_name: LN
+      namespace: ln
+      pack_prefix: ln-datapack
+      force: ${{ inputs.force == true }}
