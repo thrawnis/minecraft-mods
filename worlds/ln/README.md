@@ -5,7 +5,7 @@ A real-size Minecraft world of **Laguna Niguel, California** ("LN"). It's built 
 **Features:**
 - **4 teleport stations**, each with one button that opens a **map menu** of every station. Click one and you're there.
 - **Tour signs:** 4 signs: City Hall, Regional Park, the Ziggurat and the Metrolink station.
-- **Building interiors** and extra street and shop signs, from Arnis's `--interior` and `--signage full` options.
+- **Extra street and shop signs**, from Arnis's `--signage full` option. Buildings are left hollow, without interiors, which keeps the world lighter.
 - **Normal Minecraft height** (`--vanilla-height`), so it runs much lighter than the LA & NYC world.
 
 ## Compatibility
@@ -15,7 +15,7 @@ A real-size Minecraft world of **Laguna Niguel, California** ("LN"). It's built 
 | **Type** | World (generated on your computer) + datapack |
 | **Minecraft version** | Java Edition 26.1 (the datapack was tested in 26.1) |
 | **Generator** | Arnis 3.4.0 or newer |
-| **Datapack version** | 1.0.0 |
+| **Datapack version** | 1.1.0 |
 | **Mode** | Creative (sightseeing) |
 
 ## Dependencies
@@ -27,7 +27,7 @@ A real-size Minecraft world of **Laguna Niguel, California** ("LN"). It's built 
 
 - **Area:** all of Laguna Niguel, about 7 km × 9.5 km.
 - **Real size:** 1 block = 1 metre. Streets, building shapes and heights, parks, water and terrain are in the right places.
-- **Buildings are simple blocks**, with basic rooms inside. There are no detailed fronts or logos.
+- **Buildings are simple blocks**, hollow inside. There are no detailed fronts or logos.
 - **Size:** this covers the whole city, so it's big: expect several GB of disk space and a long generation time.
 
 ## Installation
@@ -50,7 +50,7 @@ Replace `arnis` with the name of the program you downloaded (on Windows it's som
 - **Linux:** `~/.minecraft/saves`
 
 ```text
-arnis --bbox="33.48,-117.74,33.565,-117.665" --projection web_mercator --vanilla-height --interior --signage full --spawn-lat 33.523 --spawn-lng -117.7042 --output-dir="SAVES_FOLDER"
+arnis --bbox="33.48,-117.74,33.565,-117.665" --projection web_mercator --vanilla-height --signage full --spawn-lat 33.523 --spawn-lng -117.7042 --output-dir="SAVES_FOLDER"
 ```
 
 For example, on Windows:
@@ -70,7 +70,7 @@ Arnis saves worlds in an older Minecraft format. Converting it once, before play
 ### Step 4: Add the datapack
 
 1. Close Minecraft.
-2. Copy `release/ln-datapack-1.0.0.zip` (don't unzip it) into the world's `datapacks` folder: `<saves folder>/Arnis World N/datapacks/`
+2. Copy `release/ln-datapack-1.1.0.zip` (don't unzip it) into the world's `datapacks` folder: `<saves folder>/Arnis World N/datapacks/`
 
 ### Step 5: Play
 
@@ -145,5 +145,7 @@ python3 src/generate.py
 This rebuilds the datapack zip in `release/` and prints the Arnis command and station coordinates. Stations and signs are listed at the top of the script.
 
 ## Changelog
+
+- **1.1.0**: No building interiors (lighter world). The Arnis options are saved in `src/arnis-args.txt`, which the automatic build also uses.
 
 - **1.0.0**: First release.

@@ -1,0 +1,31 @@
+# Rebuilds the Disneyland world only when its own files change (not READMEs), or on demand.
+name: build-disneyland
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "worlds/disneyland/**"
+      - "!worlds/disneyland/**/*.md"
+      - ".github/workflows/build-disneyland.yml"
+      - ".github/workflows/build-world.yml"
+      - ".github/scripts/**"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Rebuild even if this version is already released"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  world:
+    uses: ./.github/workflows/build-world.yml
+    with:
+      project: worlds/disneyland
+      world_name: Disneyland
+      namespace: dl
+      pack_prefix: disneyland-datapack
+      force: ${{ inputs.force == true }}

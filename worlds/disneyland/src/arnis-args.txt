@@ -1,0 +1,10 @@
+--bbox=33.802,-117.929,33.818,-117.913
+--projection
+web_mercator
+--vanilla-height
+--signage
+full
+--spawn-lat
+33.8105
+--spawn-lng
+-117.91895

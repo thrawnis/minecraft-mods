@@ -1,0 +1,160 @@
+# Shared recipe: generate a world with Arnis, add its datapack, convert it to the current
+# Minecraft version with a real server (which also builds the stations), zip it and publish
+# it as a GitHub Release. Called by the small build-<world>.yml workflows.
+name: build-world
+
+on:
+  workflow_call:
+    inputs:
+      project:      { type: string, required: true }   # e.g. worlds/disneyland
+      world_name:   { type: string, required: true }   # name in the Singleplayer list and folder
+      namespace:    { type: string, required: true }   # datapack namespace, e.g. dl
+      pack_prefix:  { type: string, required: true }   # e.g. disneyland-datapack
+      force:        { type: boolean, default: false }  # rebuild even if this version is released
+
+env:
+  ARNIS_REF: v3.4.0
+  MC_VERSION: "26.1"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Work out version and release tag
+        id: meta
+        run: |
+          VERSION=$(python3 -c "import re,sys;print(re.search(r'^VERSION = \"(.+)\"', open(sys.argv[1]).read(), re.M).group(1))" "${{ inputs.project }}/src/generate.py")
+          SLUG=$(basename "${{ inputs.project }}")
+          TAG="${SLUG}-world-v${VERSION}"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          if gh release view "$TAG" >/dev/null 2>&1 && [ "${{ inputs.force }}" != "true" ]; then
+            echo "Release $TAG already exists; nothing to do (use Run workflow with force to rebuild)."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Free up disk space
+        if: steps.meta.outputs.skip != 'true'
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          df -h /
+
+      - uses: actions/setup-java@v4
+        if: steps.meta.outputs.skip != 'true'
+        with:
+          distribution: temurin
+          java-version: "25"
+
+      - name: Cache Arnis build
+        if: steps.meta.outputs.skip != 'true'
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            arnis/target
+          key: arnis-${{ env.ARNIS_REF }}-${{ runner.os }}
+
+      - name: Build Arnis (command-line version)
+        if: steps.meta.outputs.skip != 'true'
+        run: |
+          if [ ! -d arnis/.git ]; then
+            git clone --depth 1 --branch "$ARNIS_REF" https://github.com/louis-e/arnis.git arnis-src || git clone --depth 1 https://github.com/louis-e/arnis.git arnis-src
+            rsync -a arnis-src/ arnis/
+          fi
+          cd arnis
+          rustup toolchain install stable --profile minimal
+          cargo build --release --no-default-features
+          echo "ARNIS_COMMIT=$(git rev-parse --short HEAD)" >> "$GITHUB_ENV"
+
+      - name: Generate the world
+        if: steps.meta.outputs.skip != 'true'
+        run: |
+          mapfile -t ARGS < "${{ inputs.project }}/src/arnis-args.txt"
+          mkdir -p out
+          ./arnis/target/release/arnis "${ARGS[@]}" --output-dir out
+          WORLD_DIR=$(dirname "$(find out -maxdepth 2 -name level.dat | head -1)")
+          mkdir -p work
+          mv "$WORLD_DIR" "work/${{ inputs.world_name }}"
+          du -sh "work/${{ inputs.world_name }}"
+
+      - name: Name the world and add the datapack
+        if: steps.meta.outputs.skip != 'true'
+        run: |
+          pip install --quiet nbtlib
+          W="work/${{ inputs.world_name }}"
+          python3 .github/scripts/set_level_name.py "$W/level.dat" "${{ inputs.world_name }}"
+          mkdir -p "$W/datapacks"
+          cp "${{ inputs.project }}/release/${{ inputs.pack_prefix }}-${{ steps.meta.outputs.version }}.zip" "$W/datapacks/"
+
+      - name: Convert to Minecraft ${{ env.MC_VERSION }} and build the stations (real server)
+        if: steps.meta.outputs.skip != 'true'
+        working-directory: work
+        run: |
+          MANIFEST=$(curl -fsSL https://piston-meta.mojang.com/mc/game/version_manifest_v2.json)
+          VERSION_URL=$(echo "$MANIFEST" | jq -r --arg v "$MC_VERSION" '.versions[] | select(.id == $v) | .url')
+          SERVER_URL=$(curl -fsSL "$VERSION_URL" | jq -r '.downloads.server.url')
+          curl -fsSL -o server.jar "$SERVER_URL"
+          # Running a Minecraft server means accepting the Minecraft EULA: https://aka.ms/MinecraftEULA
+          echo "eula=true" > eula.txt
+          printf 'level-name=%s\nonline-mode=false\nmax-tick-time=-1\nspawn-protection=0\n' "${{ inputs.world_name }}" > server.properties
+          mkfifo console
+          java -Xmx10G -jar server.jar --forceUpgrade --nogui < console > server.log 2>&1 &
+          SERVER_PID=$!
+          exec 3>console
+          for i in $(seq 1 1440); do grep -q 'Done (' server.log && break; kill -0 $SERVER_PID || { cat server.log; exit 1; }; sleep 5; done
+          grep -q 'Done (' server.log || { tail -50 server.log; exit 1; }
+          echo "Server started; waiting for the datapack to build the stations"
+          for i in $(seq 1 120); do
+            echo "data get storage ${{ inputs.namespace }}:state built" >&3
+            sleep 5
+            grep -q "${{ inputs.namespace }}:state has the following contents: 1b" server.log && break
+          done
+          grep -q "${{ inputs.namespace }}:state has the following contents: 1b" server.log || { tail -80 server.log; echo "stations were not built"; exit 1; }
+          echo "save-all flush" >&3
+          sleep 15
+          echo "stop" >&3
+          wait $SERVER_PID || true
+          grep -iE "error|exception" server.log | grep -v "Failed to fetch" | tail -20 || true
+
+      - name: Package
+        if: steps.meta.outputs.skip != 'true'
+        working-directory: work
+        run: |
+          rm -f "${{ inputs.world_name }}/session.lock"
+          ZIP="${{ steps.meta.outputs.slug }}-world-${{ steps.meta.outputs.version }}.zip"
+          zip -q -r -9 "$ZIP" "${{ inputs.world_name }}"
+          ls -lh "$ZIP"
+          # GitHub allows up to 2 GB per file; split bigger worlds into parts
+          if [ "$(stat -c %s "$ZIP")" -gt 1900000000 ]; then
+            split -b 1900m -d -a 2 "$ZIP" "$ZIP.part"
+            rm "$ZIP"
+          fi
+          ls -lh
+
+      - name: Publish the release
+        if: steps.meta.outputs.skip != 'true'
+        run: |
+          TAG="${{ steps.meta.outputs.tag }}"
+          cat > notes.md <<NOTES
+          Ready-made **${{ inputs.world_name }}** world for Minecraft Java **${MC_VERSION}** (already converted to ${MC_VERSION}, stations built).
+
+          **Install:** download the zip, unzip it, and move the **${{ inputs.world_name }}** folder into your Minecraft \`saves\` folder. If the download is split into \`.part00\`, \`.part01\`… files, download them all and join them first (see the project README).
+
+          Generated with Arnis (${ARNIS_REF}, ${ARNIS_COMMIT}) from map data © OpenStreetMap contributors, available under the Open Database License (ODbL): https://www.openstreetmap.org/copyright
+          NOTES
+          sed -i 's/^          //' notes.md
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" work/*.zip* --clobber
+          else
+            gh release create "$TAG" work/*.zip* --title "${{ inputs.world_name }} world ${{ steps.meta.outputs.version }}" --notes-file notes.md
+          fi

@@ -7,7 +7,7 @@ _Fan-made map, not affiliated with Disney._
 **Features:**
 - **12 teleport stations**, each with one button that opens a **map menu** of every station. Click one and you're there.
 - **Tour signs:** 14 signs with opening years, e.g. *Sleeping Beauty Castle / Opened 1955*, *Matterhorn Bobsleds / Opened 1959*.
-- **Building interiors** and extra street and shop signs, from Arnis's `--interior` and `--signage full` options.
+- **Extra street and shop signs**, from Arnis's `--signage full` option. Buildings are left hollow, without interiors, which keeps the world lighter.
 - **Normal Minecraft height** (`--vanilla-height`), so it runs much lighter than the LA & NYC world.
 
 ## Compatibility
@@ -17,7 +17,7 @@ _Fan-made map, not affiliated with Disney._
 | **Type** | World (generated on your computer) + datapack |
 | **Minecraft version** | Java Edition 26.1 (the datapack was tested in 26.1) |
 | **Generator** | Arnis 3.4.0 or newer |
-| **Datapack version** | 1.0.0 |
+| **Datapack version** | 1.1.0 |
 | **Mode** | Creative (sightseeing) |
 
 ## Dependencies
@@ -29,7 +29,7 @@ _Fan-made map, not affiliated with Disney._
 
 - **Area:** the whole Disneyland Resort, about 1.8 km × 1.5 km.
 - **Real size:** 1 block = 1 metre. Streets, building shapes and heights, parks, water and terrain are in the right places.
-- **Buildings are simple blocks**, with basic rooms inside. There are no detailed fronts or logos.
+- **Buildings are simple blocks**, hollow inside. There are no detailed fronts or logos.
 - **Size:** small as Arnis worlds go: a few hundred MB, and generation is reasonably quick.
 
 ## Installation
@@ -52,7 +52,7 @@ Replace `arnis` with the name of the program you downloaded (on Windows it's som
 - **Linux:** `~/.minecraft/saves`
 
 ```text
-arnis --bbox="33.802,-117.929,33.818,-117.913" --projection web_mercator --vanilla-height --interior --signage full --spawn-lat 33.8105 --spawn-lng -117.91895 --output-dir="SAVES_FOLDER"
+arnis --bbox="33.802,-117.929,33.818,-117.913" --projection web_mercator --vanilla-height --signage full --spawn-lat 33.8105 --spawn-lng -117.91895 --output-dir="SAVES_FOLDER"
 ```
 
 For example, on Windows:
@@ -72,7 +72,7 @@ Arnis saves worlds in an older Minecraft format. Converting it once, before play
 ### Step 4: Add the datapack
 
 1. Close Minecraft.
-2. Copy `release/disneyland-datapack-1.0.0.zip` (don't unzip it) into the world's `datapacks` folder: `<saves folder>/Arnis World N/datapacks/`
+2. Copy `release/disneyland-datapack-1.1.0.zip` (don't unzip it) into the world's `datapacks` folder: `<saves folder>/Arnis World N/datapacks/`
 
 ### Step 5: Play
 
@@ -155,5 +155,7 @@ python3 src/generate.py
 This rebuilds the datapack zip in `release/` and prints the Arnis command and station coordinates. Stations and signs are listed at the top of the script.
 
 ## Changelog
+
+- **1.1.0**: No building interiors (lighter world). The Arnis options are saved in `src/arnis-args.txt`, which the automatic build also uses.
 
 - **1.0.0**: First release.

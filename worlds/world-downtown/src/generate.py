@@ -305,7 +305,7 @@ def commands():
         if i == 0:
             _, lat, lon, _ = STATIONS["hollywood"]
             spawn = f" --spawn-lat {lat} --spawn-lng {lon}"
-        print(f'  {name}: --one-world --world-name="LA and NYC" --interior --signage full '
+        print(f'  {name}: --one-world --world-name="LA and NYC" --signage full '
               f'--bbox="{a},{b},{c},{d}"{spawn}')
     print("\nStation block coordinates (before the ground search):")
     for key, (label, lat, lon, _) in STATIONS.items():

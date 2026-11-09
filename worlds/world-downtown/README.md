@@ -19,7 +19,7 @@ You build the world on your own computer with [Arnis](https://github.com/louis-e
 - **Ten teleport stations:** Hollywood, Hollywood Sign, Griffith Observatory, Downtown LA, LAX Terminals, LAX Theme Building, Times Square, Empire State roof, Central Park and Statue of Liberty. Each has one button.
 - **Map menu:** the station button opens a pop-up menu listing every station. Click one and you're there, with no confirmation screen. You can also open the menu anywhere with `/function lanyc:menu`.
 - **Tour signs:** 34 signs at landmarks, each with the name and a short fact (e.g. *TCL Chinese Theatre / Opened 1927 / Star handprints*). The text glows, so you can read them at night.
-- **Building interiors and extra signage:** Arnis's `--interior` (rooms inside buildings) and `--signage full` (more street and shop signs) are included in the generation commands below.
+- **Extra signage:** Arnis's `--signage full` (more street and shop signs) is included in the generation commands below. Buildings are left hollow, without interiors, which keeps the world lighter.
 
 ## Compatibility
 
@@ -39,7 +39,7 @@ You build the world on your own computer with [Arnis](https://github.com/louis-e
 ## What to expect
 
 - **Streets, building shapes and heights, parks, water and terrain** are in the right places at real size.
-- **Buildings are simple blocks.** With `--interior` they have basic rooms inside, but there are no detailed fronts, Times Square screens or logos.
+- **Buildings are simple blocks**, hollow inside. There are no detailed fronts, Times Square screens or logos.
 - **The LA areas are at their real distances apart**, about 3–20 km. The New York areas are about **4 million blocks east**. Use the stations to get there.
 - **New York is about 9% stretched** sideways. A flat map can't be exactly right on both coasts at once, so LA is true size and NYC is slightly larger.
 - **Size:** expect many GB of disk space and several hours of generation for all seven areas, depending on your computer. Opening the world can also take a while. A lower render distance helps.
@@ -67,27 +67,27 @@ Replace `arnis` with the name of the program you downloaded (on Windows it's som
 - **Linux:** `~/.minecraft/saves`
 
 ```text
-arnis --one-world --world-name="LA and NYC" --interior --signage full --output-dir="SAVES_FOLDER" --bbox="34.0856,-118.3524,34.1144,-118.3176" --spawn-lat 34.10166 --spawn-lng -118.33869
+arnis --one-world --world-name="LA and NYC" --signage full --output-dir="SAVES_FOLDER" --bbox="34.0856,-118.3524,34.1144,-118.3176" --spawn-lat 34.10166 --spawn-lng -118.33869
 
-arnis --one-world --world-name="LA and NYC" --interior --signage full --output-dir="SAVES_FOLDER" --bbox="34.0356,-118.2723,34.0644,-118.2377"
+arnis --one-world --world-name="LA and NYC" --signage full --output-dir="SAVES_FOLDER" --bbox="34.0356,-118.2723,34.0644,-118.2377"
 
-arnis --one-world --world-name="LA and NYC" --interior --signage full --output-dir="SAVES_FOLDER" --bbox="34.116,-118.3284,34.1448,-118.2936"
+arnis --one-world --world-name="LA and NYC" --signage full --output-dir="SAVES_FOLDER" --bbox="34.116,-118.3284,34.1448,-118.2936"
 
-arnis --one-world --world-name="LA and NYC" --interior --signage full --output-dir="SAVES_FOLDER" --bbox="33.9281,-118.4223,33.9569,-118.3877"
+arnis --one-world --world-name="LA and NYC" --signage full --output-dir="SAVES_FOLDER" --bbox="33.9281,-118.4223,33.9569,-118.3877"
 
-arnis --one-world --world-name="LA and NYC" --interior --signage full --output-dir="SAVES_FOLDER" --bbox="40.7436,-74.0045,40.7724,-73.9665"
+arnis --one-world --world-name="LA and NYC" --signage full --output-dir="SAVES_FOLDER" --bbox="40.7436,-74.0045,40.7724,-73.9665"
 
-arnis --one-world --world-name="LA and NYC" --interior --signage full --output-dir="SAVES_FOLDER" --bbox="40.7726,-73.9844,40.8014,-73.9464"
+arnis --one-world --world-name="LA and NYC" --signage full --output-dir="SAVES_FOLDER" --bbox="40.7726,-73.9844,40.8014,-73.9464"
 
-arnis --one-world --world-name="LA and NYC" --interior --signage full --output-dir="SAVES_FOLDER" --bbox="40.686,-74.05,40.703,-74.034"
+arnis --one-world --world-name="LA and NYC" --signage full --output-dir="SAVES_FOLDER" --bbox="40.686,-74.05,40.703,-74.034"
 ```
 
 The lines are: Hollywood, Downtown LA, Griffith Park & Hollywood Sign, LAX, Times Square & Midtown, Central Park, Statue of Liberty & Ellis Island.
 
 For example, on Windows the first one would start like:
-`arnis-windows.exe --one-world --world-name="LA and NYC" --interior --signage full --output-dir="%APPDATA%\.minecraft\saves" --bbox=...`
+`arnis-windows.exe --one-world --world-name="LA and NYC" --signage full --output-dir="%APPDATA%\.minecraft\saves" --bbox=...`
 
-**Already generated the first three areas with version 1.0.0?** You don't have to start again. Just run the Griffith, LAX, Central Park and Statue of Liberty commands, which add to the same world. Those first three areas won't have interiors or the extra signage unless you regenerate them.
+**Already generated the first three areas with version 1.0.0?** You don't have to start again. Just run the Griffith, LAX, Central Park and Statue of Liberty commands, which add to the same world. Those first three areas won't have the extra signage unless you regenerate them.
 
 ### Step 3: Add the datapack
 
@@ -137,7 +137,6 @@ Without walking to a station, type `/function lanyc:menu` to open the same menu 
 
 This is a very big world:
 - **Seven city areas** of about 10 km² each.
-- **Building interiors.**
 - **Extra-tall height:** Arnis's One World mode always makes the world about 4,000 blocks tall, instead of Minecraft's normal 384.
 - **An older Minecraft format:** Arnis saves worlds in Minecraft 1.21.1's format. 26.1 then converts each part of the city the first time you go near it, while you're playing, which causes heavy lag and freezes.
 

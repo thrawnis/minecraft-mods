@@ -16,7 +16,7 @@ import math
 import zipfile
 from pathlib import Path
 
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 NS = "ln"
 PACK_NAME = f"ln-datapack-{VERSION}"
 DATA_FORMAT = 101  # data pack format of Minecraft 26.1
@@ -246,12 +246,19 @@ def build():
     print("wrote", out)
 
 
-def commands():
+def arnis_args():
+    """The Arnis options for this world (no --output-dir). Also used by the GitHub build."""
     (a, b, c, d) = next(iter(AREAS.values()))[1]
-    _, lat, lon, _ = STATIONS["city_hall"]
+    _, lat, lon, _ = STATIONS[next(iter(STATIONS))]
+    return [f"--bbox={a},{b},{c},{d}", "--projection", "web_mercator", "--vanilla-height",
+            "--signage", "full", "--spawn-lat", str(lat), "--spawn-lng", str(lon)]
+
+
+def commands():
+    args = arnis_args()
+    (Path(__file__).resolve().parent / "arnis-args.txt").write_text("\n".join(args) + "\n")
     print("\nArnis command (add --output-dir):")
-    print(f'  --bbox="{a},{b},{c},{d}" --projection web_mercator --vanilla-height --interior '
-          f'--signage full --spawn-lat {lat} --spawn-lng {lon}')
+    print("  " + " ".join(f'"{x}"' if "," in x else x for x in args))
     print("\nStation block coordinates (before the ground search):")
     for key, (label, lat, lon, _) in STATIONS.items():
         x, z = to_block(lat, lon)
