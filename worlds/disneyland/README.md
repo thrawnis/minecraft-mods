@@ -38,7 +38,7 @@ _Fan-made map, not affiliated with Disney._
 
 A ready-to-play copy is built automatically on GitHub. It's already converted for 26.1, named **Disneyland**, and has the datapack installed with the stations built, so you can skip Steps 1–4 below.
 
-1. Open https://github.com/thrawnis/minecraft-mods/releases/tag/disneyland-world-v1.1.1 and download `disneyland-world-1.1.1.zip` (about 25 MB).
+1. On this repository's GitHub page, click **Releases** (right-hand side), open **disneyland-world-v1.1.1** and download `disneyland-world-1.1.1.zip` (about 25 MB).
 2. Close Minecraft and unzip it into your saves folder (see the paths in Step 2 below), so you get `saves/Disneyland/level.dat`.
 3. Open Minecraft **26.1**, click **Singleplayer**, and open **Disneyland**.
 

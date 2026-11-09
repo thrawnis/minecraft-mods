@@ -50,7 +50,7 @@ You build the world on your own computer with [Arnis](https://github.com/louis-e
 
 A ready-to-play copy is built automatically on GitHub. All seven areas are in it, it's already converted for 26.1 (so the slow **Optimize World** step below isn't needed), it's named **LA and NYC**, and the datapack is installed with the stations built. You can skip Steps 1–3 below.
 
-1. Open https://github.com/thrawnis/minecraft-mods/releases/tag/la-nyc-world-v2.1.1 and download `la-nyc-world-2.1.1.zip` (about 650 MB; about 1.3 GB once unzipped).
+1. On this repository's GitHub page, click **Releases** (right-hand side), open **la-nyc-world-v2.1.1** and download `la-nyc-world-2.1.1.zip` (about 650 MB; about 1.3 GB once unzipped).
 2. Close Minecraft and unzip it into your saves folder (see the paths in Step 2 below), so you get `saves/LA and NYC/level.dat`.
 3. Open Minecraft **26.1**, click **Singleplayer**, and open **LA and NYC**.
 

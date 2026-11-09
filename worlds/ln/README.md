@@ -36,7 +36,7 @@ A real-size Minecraft world of **Laguna Niguel, California** ("LN"). It's built 
 
 A ready-to-play copy is built automatically on GitHub. It's already converted for 26.1, named **LN**, and has the datapack installed with the stations built, so you can skip Steps 1–4 below.
 
-1. Open https://github.com/thrawnis/minecraft-mods/releases/tag/ln-world-v1.1.1 and download `ln-world-1.1.1.zip` (about 460 MB; about 1.1 GB once unzipped).
+1. On this repository's GitHub page, click **Releases** (right-hand side), open **ln-world-v1.1.1** and download `ln-world-1.1.1.zip` (about 460 MB; about 1.1 GB once unzipped).
 2. Close Minecraft and unzip it into your saves folder (see the paths in Step 2 below), so you get `saves/LN/level.dat`.
 3. Open Minecraft **26.1**, click **Singleplayer**, and open **LN**.
 
