@@ -355,6 +355,51 @@ index 5b6d091..30f391a 100644
 -        editor.set_block(DARK_OAK_DOOR_UPPER, x, 2, z, None, None);
      }
  }
+diff --git a/src/element_processing/fuel_stations.rs b/src/element_processing/fuel_stations.rs
+index cca6258..7183e51 100644
+--- a/src/element_processing/fuel_stations.rs
++++ b/src/element_processing/fuel_stations.rs
+@@ -968,7 +968,7 @@ fn kiosk(
+         .collect();
+     heights.sort_unstable();
+     let base = heights[heights.len() / 2];
+-    let front = axis_of(-canopy.v().0, -canopy.v().1);
++    let _front = axis_of(-canopy.v().0, -canopy.v().1);
+     for &(x, z, a, b) in &cells {
+         editor.register_road_surface_y(x, z, base);
+         editor.set_block_absolute(LIGHT_GRAY_CONCRETE, x, base, z, None, None);
+@@ -988,30 +988,10 @@ fn kiosk(
+             editor.set_block_absolute(LIGHT_GRAY_CONCRETE, x, base + 4, z, None, None);
+         }
+     }
+-    // Door in the glazed front.
++    // Door in the glazed front. Walk-in buildings: an open gap, no door leaf.
+     let (dx, dz) = canopy.cell(0.0, b0 + 0.5);
+     editor.set_block_absolute(AIR, dx, base + 1, dz, Some(&[GLASS]), None);
+     editor.set_block_absolute(AIR, dx, base + 2, dz, Some(&[GLASS]), None);
+-    place(
+-        editor,
+-        with_props(
+-            IRON_DOOR,
+-            &[("facing", facing_name(front)), ("half", "lower")],
+-        ),
+-        dx,
+-        base + 1,
+-        dz,
+-    );
+-    place(
+-        editor,
+-        with_props(
+-            IRON_DOOR,
+-            &[("facing", facing_name(front)), ("half", "upper")],
+-        ),
+-        dx,
+-        base + 2,
+-        dz,
+-    );
+ }
+ 
+ #[cfg(test)]
 diff --git a/src/element_processing/subprocessor/interior/mod.rs b/src/element_processing/subprocessor/interior/mod.rs
 index 31278d2..e0cbc9f 100644
 --- a/src/element_processing/subprocessor/interior/mod.rs
