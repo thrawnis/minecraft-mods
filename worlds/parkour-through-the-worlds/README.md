@@ -43,7 +43,7 @@ There are two ways to get it. Use **one**.
 
 ### Option A: Ready-made world (recommended)
 
-1. Download `release/parkour-through-the-worlds-world-1.0.0.zip`.
+1. Download `parkour-through-the-worlds-world-1.0.0.zip`: on this repository's GitHub page, click **Releases** (right-hand side) and open **parkour-through-the-worlds-world-v1.0.0**. (The same file is also in this folder at `release/parkour-through-the-worlds-world-1.0.0.zip`.)
 2. **Unzip it.** You get a folder called **Parkour Through the Worlds**.
 3. Move that folder into your Minecraft `saves` folder:
    - **Windows:** press **Win + R**, type `%APPDATA%\.minecraft\saves`, press Enter.

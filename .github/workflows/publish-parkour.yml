@@ -1,0 +1,50 @@
+# Publishes the ready-made Parkour Through the Worlds world (already built and kept in the
+# repo) as a GitHub Release, only when its release files change, or on demand.
+name: publish-parkour
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "worlds/parkour-through-the-worlds/release/**"
+      - "worlds/parkour-through-the-worlds/src/generate.py"
+      - ".github/workflows/publish-parkour.yml"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Re-upload even if this version is already released"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      P: worlds/parkour-through-the-worlds
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Publish the release
+        run: |
+          VERSION=$(python3 -c "import re,sys;print(re.search(r'^VERSION = \"(.+)\"', open(sys.argv[1]).read(), re.M).group(1))" "$P/src/generate.py")
+          TAG="parkour-through-the-worlds-world-v${VERSION}"
+          WORLD="$P/release/parkour-through-the-worlds-world-${VERSION}.zip"
+          PACK="$P/release/parkour-through-the-worlds-datapack-${VERSION}.zip"
+          ls -l "$WORLD" "$PACK"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            if [ "${{ inputs.force }}" = "true" ]; then gh release upload "$TAG" "$WORLD" "$PACK" --clobber; else echo "Release $TAG already exists; nothing to do."; fi
+            exit 0
+          fi
+          cat > notes.md <<NOTES
+          Ready-made **Parkour Through the Worlds** world for Minecraft Java **26.1**, with the course and datapack already in it.
+
+          **Install:** download \`parkour-through-the-worlds-world-${VERSION}.zip\`, unzip it, and move the **Parkour Through the Worlds** folder into your Minecraft \`saves\` folder.
+
+          To add the course to a world of your own instead, put \`parkour-through-the-worlds-datapack-${VERSION}.zip\` (don't unzip it) in that world's \`datapacks\` folder. See the project README.
+          NOTES
+          sed -i 's/^          //' notes.md
+          gh release create "$TAG" "$WORLD" "$PACK" --title "Parkour Through the Worlds ${VERSION}" --notes-file notes.md
