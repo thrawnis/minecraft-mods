@@ -7,7 +7,7 @@ _Fan-made map, not affiliated with Disney._
 **Features:**
 - **12 teleport stations**, each with one button that opens a **map menu** of every station. Click one and you're there.
 - **Tour signs:** 14 signs with opening years, e.g. *Sleeping Beauty Castle / Opened 1955*, *Matterhorn Bobsleds / Opened 1959*.
-- **Extra street and shop signs**, from Arnis's `--signage full` option. Buildings are left hollow, without interiors, which keeps the world lighter.
+- **Extra street and shop signs**, from Arnis's `--signage full` option. Buildings are left empty, without furniture or rooms, which keeps the world lighter.
 - **Normal Minecraft height** (`--vanilla-height`), so it runs much lighter than the LA & NYC world.
 
 ## Compatibility
@@ -17,7 +17,7 @@ _Fan-made map, not affiliated with Disney._
 | **Type** | World (generated on your computer) + datapack |
 | **Minecraft version** | Java Edition 26.1 (the datapack was tested in 26.1) |
 | **Generator** | Arnis 3.4.0 or newer |
-| **Datapack version** | 1.1.1 |
+| **Datapack version** | 1.2.0 |
 | **Mode** | Creative (sightseeing) |
 
 ## Dependencies
@@ -29,7 +29,8 @@ _Fan-made map, not affiliated with Disney._
 
 - **Area:** the whole Disneyland Resort, about 1.8 km × 1.5 km.
 - **Real size:** 1 block = 1 metre. Streets, building shapes and heights, parks, water and terrain are in the right places.
-- **Buildings are simple blocks**, hollow inside. There are no detailed fronts or logos.
+- **Buildings are simple blocks**, empty inside. There are no detailed fronts or logos.
+- **Walk-in buildings** (ready-made download): buildings are empty inside, nearly all have an open doorway at street level, and those with several floors have a ladder up through them, so you can explore each storey on foot. A world you generate yourself with the Arnis program has closed buildings instead, since this comes from a small change to Arnis that only the automatic build includes.
 - **Size:** small as Arnis worlds go: a few hundred MB, and generation is reasonably quick.
 
 ## Installation
@@ -38,7 +39,7 @@ _Fan-made map, not affiliated with Disney._
 
 A ready-to-play copy is built automatically on GitHub. It's already converted for 26.1, named **Disneyland**, and has the datapack installed with the stations built, so you can skip Steps 1–4 below.
 
-1. On this repository's GitHub page, click **Releases** (right-hand side), open **disneyland-world-v1.1.1** and download `disneyland-world-1.1.1.zip` (about 25 MB).
+1. On this repository's GitHub page, click **Releases** (right-hand side), open **disneyland-world-v1.2.0** and download `disneyland-world-1.2.0.zip` (about 25 MB).
 2. Close Minecraft and unzip it into your saves folder (see the paths in Step 2 below), so you get `saves/Disneyland/level.dat`.
 3. Open Minecraft **26.1**, click **Singleplayer**, and open **Disneyland**.
 
@@ -84,7 +85,7 @@ Arnis saves worlds in an older Minecraft format. Converting it once, before play
 ### Step 4: Add the datapack
 
 1. Close Minecraft.
-2. Copy `release/disneyland-datapack-1.1.1.zip` (don't unzip it) into the world's `datapacks` folder: `<saves folder>/Arnis World N/datapacks/`
+2. Copy `release/disneyland-datapack-1.2.0.zip` (don't unzip it) into the world's `datapacks` folder: `<saves folder>/Arnis World N/datapacks/`
 
 ### Step 5: Play
 
@@ -168,6 +169,7 @@ This rebuilds the datapack zip in `release/` and prints the Arnis command and st
 
 ## Changelog
 
+- **1.2.0**: Walk-in buildings in the ready-made world: every doorway is an open gap instead of a door, and buildings with more than one floor get a ladder from the ground floor to the top floor. Datapack unchanged apart from the version.
 - **1.1.1**: Stations are placed more reliably at street level: they look for open ground with nothing hollow below (up to 48 blocks away) before falling back, so they no longer land on roofs.
 - **1.1.0**: No building interiors (lighter world). The Arnis options are saved in `src/arnis-args.txt`, which the automatic build also uses.
 

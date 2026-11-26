@@ -16,7 +16,7 @@ import math
 import zipfile
 from pathlib import Path
 
-VERSION = "1.1.1"
+VERSION = "1.2.0"
 NS = "dl"
 PACK_NAME = f"disneyland-datapack-{VERSION}"
 DATA_FORMAT = 101  # data pack format of Minecraft 26.1

@@ -16,7 +16,7 @@ import math
 import zipfile
 from pathlib import Path
 
-VERSION = "2.1.1"
+VERSION = "2.2.0"
 NS = "lanyc"
 PACK_NAME = f"la-nyc-teleport-{VERSION}"
 WORLD_NAME = "LA and NYC"

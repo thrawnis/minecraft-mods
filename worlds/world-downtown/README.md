@@ -19,7 +19,7 @@ You build the world on your own computer with [Arnis](https://github.com/louis-e
 - **Ten teleport stations:** Hollywood, Hollywood Sign, Griffith Observatory, Downtown LA, LAX Terminals, LAX Theme Building, Times Square, Empire State roof, Central Park and Statue of Liberty. Each has one button.
 - **Map menu:** the station button opens a pop-up menu listing every station. Click one and you're there, with no confirmation screen. You can also open the menu anywhere with `/function lanyc:menu`.
 - **Tour signs:** 34 signs at landmarks, each with the name and a short fact (e.g. *TCL Chinese Theatre / Opened 1927 / Star handprints*). The text glows, so you can read them at night.
-- **Extra signage:** Arnis's `--signage full` (more street and shop signs) is included in the generation commands below. Buildings are left hollow, without interiors, which keeps the world lighter.
+- **Extra signage:** Arnis's `--signage full` (more street and shop signs) is included in the generation commands below. Buildings are left empty, without furniture or rooms, which keeps the world lighter.
 
 ## Compatibility
 
@@ -28,7 +28,7 @@ You build the world on your own computer with [Arnis](https://github.com/louis-e
 | **Type** | World (generated on your computer) + datapack |
 | **Minecraft version** | Java Edition 26.1 (the datapack was tested in 26.1) |
 | **Generator** | Arnis 3.4.0 or newer |
-| **Datapack version** | 2.1.1 |
+| **Datapack version** | 2.2.0 |
 | **Mode** | Creative (sightseeing) |
 
 ## Dependencies
@@ -39,7 +39,8 @@ You build the world on your own computer with [Arnis](https://github.com/louis-e
 ## What to expect
 
 - **Streets, building shapes and heights, parks, water and terrain** are in the right places at real size.
-- **Buildings are simple blocks**, hollow inside. There are no detailed fronts, Times Square screens or logos.
+- **Buildings are simple blocks**, empty inside. There are no detailed fronts, Times Square screens or logos.
+- **Walk-in buildings** (ready-made download): buildings are empty inside, nearly all have an open doorway at street level, and those with several floors have a ladder up through them, so you can explore each storey on foot. A world you generate yourself with the Arnis program has closed buildings instead, since this comes from a small change to Arnis that only the automatic build includes.
 - **The LA areas are at their real distances apart**, about 3–20 km. The New York areas are about **4 million blocks east**. Use the stations to get there.
 - **New York is about 9% stretched** sideways. A flat map can't be exactly right on both coasts at once, so LA is true size and NYC is slightly larger.
 - **Size:** expect many GB of disk space and several hours of generation for all seven areas, depending on your computer. Opening the world can also take a while. A lower render distance helps.
@@ -50,7 +51,7 @@ You build the world on your own computer with [Arnis](https://github.com/louis-e
 
 A ready-to-play copy is built automatically on GitHub. All seven areas are in it, it's already converted for 26.1 (so the slow **Optimize World** step below isn't needed), it's named **LA and NYC**, and the datapack is installed with the stations built. You can skip Steps 1–3 below.
 
-1. On this repository's GitHub page, click **Releases** (right-hand side), open **la-nyc-world-v2.1.1** and download `la-nyc-world-2.1.1.zip` (about 650 MB; about 1.3 GB once unzipped).
+1. On this repository's GitHub page, click **Releases** (right-hand side), open **la-nyc-world-v2.2.0** and download `la-nyc-world-2.2.0.zip` (about 650 MB; about 1.3 GB once unzipped).
 2. Close Minecraft and unzip it into your saves folder (see the paths in Step 2 below), so you get `saves/LA and NYC/level.dat`.
 3. Open Minecraft **26.1**, click **Singleplayer**, and open **LA and NYC**.
 
@@ -105,7 +106,7 @@ For example, on Windows the first one would start like:
 
 ### Step 3: Add the datapack
 
-Copy `release/la-nyc-teleport-2.1.1.zip` (don't unzip it) into the world's `datapacks` folder:
+Copy `release/la-nyc-teleport-2.2.0.zip` (don't unzip it) into the world's `datapacks` folder:
 `<saves folder>/LA and NYC/datapacks/`
 
 If an older version is in that folder (`la-nyc-teleport-1.0.0.zip` or `-2.0.0.zip`), **delete it first**.
@@ -218,6 +219,7 @@ This rebuilds the datapack zip in `release/` and prints the Arnis commands and s
 
 ## Changelog
 
+- **2.2.0**: Walk-in buildings in the ready-made world: every doorway is an open gap instead of a door, and buildings with more than one floor get a ladder from the ground floor to the top floor. Datapack unchanged apart from the version.
 - **2.1.1**: Stations are placed more reliably at street level: they look for open ground with nothing hollow below (up to 48 blocks away) before falling back, so they no longer land on roofs.
 - **2.1.0**: Removed the night-lights feature: it caused small stutters while exploring. Arnis's own street lamps are unchanged.
 

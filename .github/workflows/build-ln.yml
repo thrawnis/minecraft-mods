@@ -10,6 +10,7 @@ on:
       - ".github/workflows/build-ln.yml"
       - ".github/workflows/build-world.yml"
       - ".github/scripts/**"
+      - ".github/arnis-patches/**"
   workflow_dispatch:
     inputs:
       force:

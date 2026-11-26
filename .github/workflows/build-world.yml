@@ -64,7 +64,8 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             arnis/target
-          key: arnis-${{ env.ARNIS_REF }}-${{ runner.os }}
+          key: arnis-${{ env.ARNIS_REF }}-${{ runner.os }}-${{ hashFiles('.github/arnis-patches/**') }}
+          restore-keys: arnis-${{ env.ARNIS_REF }}-${{ runner.os }}-
 
       - name: Build Arnis (command-line version)
         if: steps.meta.outputs.skip != 'true'
@@ -73,6 +74,11 @@ jobs:
             git clone --depth 1 --branch "$ARNIS_REF" https://github.com/louis-e/arnis.git arnis-src || git clone --depth 1 https://github.com/louis-e/arnis.git arnis-src
             rsync -a arnis-src/ arnis/
           fi
+          # Our changes to Arnis (see .github/arnis-patches/README.md)
+          for p in .github/arnis-patches/*.patch; do
+            echo "Applying $p"
+            git -C arnis apply --verbose "../$p"
+          done
           cd arnis
           rustup toolchain install stable --profile minimal
           cargo build --release --no-default-features

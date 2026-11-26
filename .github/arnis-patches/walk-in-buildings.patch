@@ -1,0 +1,369 @@
+diff --git a/src/element_processing/buildings.rs b/src/element_processing/buildings.rs
+index 5cf97d1..1a4cb3c 100644
+--- a/src/element_processing/buildings.rs
++++ b/src/element_processing/buildings.rs
+@@ -7383,7 +7383,6 @@ fn render_entrance(
+ ) {
+     let (nx, nz) = plan.normal;
+     let facing = facing_for_normal(nx, nz);
+-    let base = plan.style.base_block();
+     let door_positions: Vec<((i32, i32), &str)> = if plan.double {
+         vec![
+             ((plan.x, plan.z), "left"),
+@@ -7393,31 +7392,18 @@ fn render_entrance(
+         vec![((plan.x, plan.z), "left")]
+     };
+ 
+-    for ((dx, dz), hinge) in &door_positions {
+-        let lower = cached_prop_block(
+-            base,
+-            &[("half", "lower"), ("facing", facing), ("hinge", hinge)],
+-        );
+-        let upper = cached_prop_block(
+-            base,
+-            &[("half", "upper"), ("facing", facing), ("hinge", hinge)],
+-        );
+-        editor.set_block_with_properties_absolute(
+-            lower,
+-            *dx,
+-            config.start_y_offset + 1 + config.abs_terrain_offset,
+-            *dz,
+-            None,
+-            Some(&[]),
+-        );
+-        editor.set_block_with_properties_absolute(
+-            upper,
+-            *dx,
+-            config.start_y_offset + 2 + config.abs_terrain_offset,
+-            *dz,
+-            None,
+-            Some(&[]),
+-        );
++    for ((dx, dz), _hinge) in &door_positions {
++        // Walk-in buildings: the doorway is an open gap, two blocks tall.
++        for dy in 1..=2 {
++            editor.set_block_absolute(
++                AIR,
++                *dx,
++                config.start_y_offset + dy + config.abs_terrain_offset,
++                *dz,
++                None,
++                Some(&[]),
++            );
++        }
+ 
+         // Threshold block just outside the door (first writer wins the cell,
+         // and buildings run before roads).
+@@ -8217,38 +8203,10 @@ fn generate_special_doors(
+ 
+                 // Place the double door (lower and upper parts)
+                 // Use empty blacklist to overwrite existing wall blocks
+-                editor.set_block_absolute(
+-                    SPRUCE_DOOR_LOWER,
+-                    door1_x,
+-                    door_y,
+-                    door1_z,
+-                    None,
+-                    Some(&[]),
+-                );
+-                editor.set_block_absolute(
+-                    SPRUCE_DOOR_UPPER,
+-                    door1_x,
+-                    door_y + 1,
+-                    door1_z,
+-                    None,
+-                    Some(&[]),
+-                );
+-                editor.set_block_absolute(
+-                    SPRUCE_DOOR_LOWER,
+-                    door2_x,
+-                    door_y,
+-                    door2_z,
+-                    None,
+-                    Some(&[]),
+-                );
+-                editor.set_block_absolute(
+-                    SPRUCE_DOOR_UPPER,
+-                    door2_x,
+-                    door_y + 1,
+-                    door2_z,
+-                    None,
+-                    Some(&[]),
+-                );
++                editor.set_block_absolute(AIR, door1_x, door_y, door1_z, None, Some(&[]));
++                editor.set_block_absolute(AIR, door1_x, door_y + 1, door1_z, None, Some(&[]));
++                editor.set_block_absolute(AIR, door2_x, door_y, door2_z, None, Some(&[]));
++                editor.set_block_absolute(AIR, door2_x, door_y + 1, door2_z, None, Some(&[]));
+ 
+                 break; // Only place one set of garage doors
+             }
+@@ -8266,15 +8224,8 @@ fn generate_special_doors(
+                 && !config.is_photo_column(door_x, door_z)
+             {
+                 // Place single oak door (empty blacklist to overwrite wall blocks)
+-                editor.set_block_absolute(OAK_DOOR, door_x, door_y, door_z, None, Some(&[]));
+-                editor.set_block_absolute(
+-                    OAK_DOOR_UPPER,
+-                    door_x,
+-                    door_y + 1,
+-                    door_z,
+-                    None,
+-                    Some(&[]),
+-                );
++                editor.set_block_absolute(AIR, door_x, door_y, door_z, None, Some(&[]));
++                editor.set_block_absolute(AIR, door_x, door_y + 1, door_z, None, Some(&[]));
+             }
+         }
+     }
+@@ -12159,6 +12110,73 @@ fn generate_floors_and_ceilings(
+     }
+ }
+ 
++/// Walk-in buildings: a ladder from the ground floor up through every storey slab of an
++/// empty building, against a wall column made solid behind it (a ladder can't hang on a
++/// glass pane), so each floor can be reached on foot. Kept away from the doorways.
++fn generate_access_ladder(
++    editor: &mut WorldEditor,
++    floor_area: &[(i32, i32)],
++    wall_outline: &[(i32, i32)],
++    config: &BuildingConfig,
++    passages: &CoordinateBitmap,
++    entrances: &[EntrancePlan],
++) {
++    if config.floor_cycle <= 0 || config.building_height <= config.floor_cycle {
++        return;
++    }
++    let start = config.start_y_offset;
++    let top = start + config.building_height;
++    // The same storey slabs `generate_floors_and_ceilings` lays.
++    let Some(top_floor) = (start + config.grammar_anchor() + config.floor_cycle..top)
++        .step_by(config.floor_cycle as usize)
++        .last()
++    else {
++        return;
++    };
++    let floor: FnvHashSet<(i32, i32)> = floor_area.iter().copied().collect();
++    let wall: FnvHashSet<(i32, i32)> = wall_outline.iter().copied().collect();
++    let near_door = |x: i32, z: i32| {
++        entrances
++            .iter()
++            .any(|p| (p.x - x).abs() <= 2 && (p.z - z).abs() <= 2)
++    };
++    let mut best: Option<(i32, i32, i32, i32)> = None;
++    for &(x, z) in floor_area {
++        if passages.contains(x, z) || near_door(x, z) {
++            continue;
++        }
++        for (dx, dz) in [(0, -1), (1, 0), (0, 1), (-1, 0)] {
++            let (wx, wz) = (x + dx, z + dz);
++            let ok = wall.contains(&(wx, wz))
++                && !floor.contains(&(wx, wz))
++                && floor.contains(&(x - dx, z - dz))
++                && !passages.contains(wx, wz)
++                && !near_door(wx, wz)
++                && !config.is_photo_column(wx, wz);
++            if ok && best.is_none_or(|b| (x, z) < (b.0, b.1)) {
++                best = Some((x, z, dx, dz));
++            }
++        }
++    }
++    let Some((x, z, dx, dz)) = best else {
++        return;
++    };
++    let abs = config.abs_terrain_offset;
++    for y in start + 1..=top_floor + 1 {
++        editor.set_block_absolute(config.wall_block, x + dx, y + abs, z + dz, None, Some(&[]));
++    }
++    let ladder = cached_prop_block(
++        LADDER,
++        &[
++            ("facing", facing_for_normal(-dx, -dz)),
++            ("waterlogged", "false"),
++        ],
++    );
++    for y in start + 1..=top_floor {
++        editor.set_block_with_properties_absolute(ladder.clone(), x, y + abs, z, None, Some(&[]));
++    }
++}
++
+ /// Calculates floor levels for multi-story buildings
+ fn calculate_floor_levels(
+     start_y_offset: i32,
+@@ -13419,6 +13437,18 @@ pub fn generate_buildings(
+             }
+         }
+ 
++        // Walk-in buildings: an empty shell with storeys gets a ladder up through them.
++        if interior_plan.is_none() && !open_hall && config.shell_glass != ShellGlass::Hall {
++            generate_access_ladder(
++                editor,
++                &cached_floor_area,
++                &wall_outline,
++                &config,
++                effective_passages,
++                &entrance_plans,
++            );
++        }
++
+         // Generate interior features
+         if let Some(plan) = &interior_plan {
+             let floor_levels = if open_hall {
+@@ -22372,7 +22402,11 @@ mod facade_integration_tests {
+     use clap::Parser as _;
+     use fnv::FnvHashMap;
+ 
+-    const DOOR_BLOCKS: &[Block] = &[OAK_DOOR, SPRUCE_DOOR_LOWER, DARK_OAK_DOOR_LOWER, BIRCH_DOOR];
++    /// Walk-in buildings: a doorway is an open gap two blocks tall in the wall (air reads
++    /// back as no block). A recessed window is open in its upper row only.
++    fn is_doorway(e: &WorldEditor, x: i32, y: i32, z: i32) -> bool {
++        (y..=y + 1).all(|yy| e.get_block_absolute(x, yy, z).is_none_or(|b| b == AIR))
++    }
+ 
+     fn flat_args() -> Args {
+         Args::parse_from([
+@@ -22697,8 +22731,7 @@ mod facade_integration_tests {
+         let mut editor = test_editor(&xz);
+         run_building(&mut editor, &way, &road, &footprints);
+ 
+-        let door_on =
+-            |e: &WorldEditor, x: i32, z: i32| e.check_for_block(x, 1, z, Some(DOOR_BLOCKS));
++        let door_on = |e: &WorldEditor, x: i32, z: i32| is_doorway(e, x, 1, z);
+         let street_wall = (20..=40).any(|x| door_on(&editor, x, 20));
+         let other_walls = (20..=40).any(|x| door_on(&editor, x, 32))
+             || (20..=32).any(|z| door_on(&editor, 20, z) || door_on(&editor, 40, z));
+@@ -22706,6 +22739,81 @@ mod facade_integration_tests {
+         assert!(!other_walls, "no doors on the other walls");
+     }
+ 
++    /// Walk-in buildings: one ladder from the ground floor up through every storey slab,
++    /// with a solid block behind each rung; a one-storey building gets none.
++    #[test]
++    fn storeys_are_reached_by_one_ladder_against_a_solid_wall() {
++        // (x, z, rungs, top rung sits in a slab, headroom above it, every rung backed)
++        type Column = (i32, i32, Vec<i32>, bool, bool, bool);
++        let ladder_columns = |levels: &str| -> Vec<Column> {
++            let xz = XZBBox::rect_from_xz_lengths(60.0, 60.0).unwrap();
++            let road = bitmap_with_rect(&xz, 0, 12, 59, 14);
++            let footprints = CoordinateBitmap::new(&xz);
++            let way = rect_way(
++                43,
++                20,
++                20,
++                40,
++                32,
++                &[("building", "apartments"), ("building:levels", levels)],
++            );
++            let mut editor = test_editor(&xz);
++            run_building(&mut editor, &way, &road, &footprints);
++            let side = [(1, 0), (-1, 0), (0, 1), (0, -1)];
++            let mut found = Vec::new();
++            for x in 21..40 {
++                for z in 21..32 {
++                    let rungs: Vec<i32> = (1..80)
++                        .filter(|&y| editor.get_block_absolute(x, y, z) == Some(LADDER))
++                        .collect();
++                    let Some(&top) = rungs.last() else { continue };
++                    let in_slab = side.iter().any(|(dx, dz)| {
++                        editor
++                            .get_block_absolute(x + dx, top, z + dz)
++                            .is_some_and(|b| b != AIR && b != LADDER)
++                    });
++                    let headroom = editor
++                        .get_block_absolute(x, top + 1, z)
++                        .is_none_or(|b| b == AIR);
++                    let backed = side.iter().any(|(dx, dz)| {
++                        rungs.iter().all(|&y| {
++                            editor
++                                .get_block_absolute(x + dx, y, z + dz)
++                                .is_some_and(|b| b != AIR && !b.name().contains("pane"))
++                        })
++                    });
++                    found.push((x, z, rungs, in_slab, headroom, backed));
++                }
++            }
++            found
++        };
++
++        let none = ladder_columns("1");
++        assert!(
++            none.is_empty(),
++            "a one-storey building needs no ladder: {none:?}"
++        );
++
++        let found = ladder_columns("3");
++        assert_eq!(found.len(), 1, "exactly one ladder column: {found:?}");
++        let (_, _, rungs, in_slab, headroom, backed) = &found[0];
++        assert_eq!(rungs[0], 1, "the ladder starts on the ground floor");
++        assert!(
++            rungs.windows(2).all(|w| w[1] == w[0] + 1),
++            "the ladder has no gaps: {rungs:?}"
++        );
++        assert!(
++            *rungs.last().unwrap() >= 6,
++            "the ladder reaches the upper floors: {rungs:?}"
++        );
++        assert!(
++            *in_slab,
++            "the top rung fills a hole in the top storey's slab"
++        );
++        assert!(*headroom, "headroom above the top rung");
++        assert!(*backed, "each rung has a solid block behind it");
++    }
++
+     #[test]
+     fn mapped_entrance_suppresses_the_synthetic_door() {
+         let xz = XZBBox::rect_from_xz_lengths(60.0, 60.0).unwrap();
+@@ -22735,10 +22843,10 @@ mod facade_integration_tests {
+         run_building(&mut editor, &way, &road, &footprints);
+ 
+         assert!(
+-            editor.check_for_block(30, 1, 32, Some(DOOR_BLOCKS)),
++            is_doorway(&editor, 30, 1, 32),
+             "mapped entrance gets an oriented door"
+         );
+-        let street_doors = (20..=40).any(|x| editor.check_for_block(x, 1, 20, Some(DOOR_BLOCKS)));
++        let street_doors = (20..=40).any(|x| is_doorway(&editor, x, 1, 20));
+         assert!(
+             !street_doors,
+             "no synthetic door once an entrance is mapped"
+@@ -23986,7 +24094,10 @@ mod doorstep_tests {
+         let door = (22..=52).find(|&x| {
+             editor
+                 .get_block_absolute(x, floor + 1, WALL_Z)
+-                .is_some_and(|b| b.name().ends_with("_door"))
++                .is_none_or(|b| b == AIR)
++                && editor
++                    .get_block_absolute(x, floor + 2, WALL_Z)
++                    .is_none_or(|b| b == AIR)
+         });
+         let run = door
+             .map(|dx| {
+diff --git a/src/element_processing/subprocessor/interior/mod.rs b/src/element_processing/subprocessor/interior/mod.rs
+index 31278d2..e0cbc9f 100644
+--- a/src/element_processing/subprocessor/interior/mod.rs
++++ b/src/element_processing/subprocessor/interior/mod.rs
+@@ -1161,9 +1161,9 @@ mod tests {
+             let mut doors = 0;
+             for (x, z) in (z0..=z1).flat_map(|z| (x0..=x1).map(move |x| (x, z))) {
+                 let on_rim = x == x0 || x == x1 || z == z0 || z == z1;
+-                let is_door = editor
+-                    .get_block_absolute(x, 1, z)
+-                    .is_some_and(|b| b.name().ends_with("_door"));
++                // Walk-in buildings: an entrance is an open gap, two blocks tall.
++                let is_door =
++                    (1..=2).all(|y| editor.get_block_absolute(x, y, z).is_none_or(|b| b == AIR));
+                 if !on_rim || !is_door {
+                     continue;
+                 }
+@@ -1345,9 +1345,8 @@ mod tests {
+             .flat_map(|z| (x0..=x1).map(move |x| (x, z)))
+             .filter(|&(x, z)| x == x0 || x == x1 || z == z0 || z == z1)
+             .filter(|&(x, z)| {
+-                editor
+-                    .get_block_absolute(x, 1, z)
+-                    .is_some_and(|b| b.name().ends_with("_door"))
++                // Walk-in buildings: an entrance is an open gap, two blocks tall.
++                (1..=2).all(|y| editor.get_block_absolute(x, y, z).is_none_or(|b| b == AIR))
+             })
+             .count();
+         assert!(

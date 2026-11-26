@@ -5,7 +5,7 @@ A real-size Minecraft world of **Laguna Niguel, California** ("LN"). It's built 
 **Features:**
 - **4 teleport stations**, each with one button that opens a **map menu** of every station. Click one and you're there.
 - **Tour signs:** 4 signs: City Hall, Regional Park, the Ziggurat and the Metrolink station.
-- **Extra street and shop signs**, from Arnis's `--signage full` option. Buildings are left hollow, without interiors, which keeps the world lighter.
+- **Extra street and shop signs**, from Arnis's `--signage full` option. Buildings are left empty, without furniture or rooms, which keeps the world lighter.
 - **Normal Minecraft height** (`--vanilla-height`), so it runs much lighter than the LA & NYC world.
 
 ## Compatibility
@@ -15,7 +15,7 @@ A real-size Minecraft world of **Laguna Niguel, California** ("LN"). It's built 
 | **Type** | World (generated on your computer) + datapack |
 | **Minecraft version** | Java Edition 26.1 (the datapack was tested in 26.1) |
 | **Generator** | Arnis 3.4.0 or newer |
-| **Datapack version** | 1.1.1 |
+| **Datapack version** | 1.2.0 |
 | **Mode** | Creative (sightseeing) |
 
 ## Dependencies
@@ -27,7 +27,8 @@ A real-size Minecraft world of **Laguna Niguel, California** ("LN"). It's built 
 
 - **Area:** all of Laguna Niguel, about 7 km × 9.5 km.
 - **Real size:** 1 block = 1 metre. Streets, building shapes and heights, parks, water and terrain are in the right places.
-- **Buildings are simple blocks**, hollow inside. There are no detailed fronts or logos.
+- **Buildings are simple blocks**, empty inside. There are no detailed fronts or logos.
+- **Walk-in buildings** (ready-made download): buildings are empty inside, nearly all have an open doorway at street level, and those with several floors have a ladder up through them, so you can explore each storey on foot. A world you generate yourself with the Arnis program has closed buildings instead, since this comes from a small change to Arnis that only the automatic build includes.
 - **Size:** this covers the whole city, so it's big: expect several GB of disk space and a long generation time.
 
 ## Installation
@@ -36,7 +37,7 @@ A real-size Minecraft world of **Laguna Niguel, California** ("LN"). It's built 
 
 A ready-to-play copy is built automatically on GitHub. It's already converted for 26.1, named **LN**, and has the datapack installed with the stations built, so you can skip Steps 1–4 below.
 
-1. On this repository's GitHub page, click **Releases** (right-hand side), open **ln-world-v1.1.1** and download `ln-world-1.1.1.zip` (about 460 MB; about 1.1 GB once unzipped).
+1. On this repository's GitHub page, click **Releases** (right-hand side), open **ln-world-v1.2.0** and download `ln-world-1.2.0.zip` (about 460 MB; about 1.1 GB once unzipped).
 2. Close Minecraft and unzip it into your saves folder (see the paths in Step 2 below), so you get `saves/LN/level.dat`.
 3. Open Minecraft **26.1**, click **Singleplayer**, and open **LN**.
 
@@ -82,7 +83,7 @@ Arnis saves worlds in an older Minecraft format. Converting it once, before play
 ### Step 4: Add the datapack
 
 1. Close Minecraft.
-2. Copy `release/ln-datapack-1.1.1.zip` (don't unzip it) into the world's `datapacks` folder: `<saves folder>/Arnis World N/datapacks/`
+2. Copy `release/ln-datapack-1.2.0.zip` (don't unzip it) into the world's `datapacks` folder: `<saves folder>/Arnis World N/datapacks/`
 
 ### Step 5: Play
 
@@ -158,6 +159,7 @@ This rebuilds the datapack zip in `release/` and prints the Arnis command and st
 
 ## Changelog
 
+- **1.2.0**: Walk-in buildings in the ready-made world: every doorway is an open gap instead of a door, and buildings with more than one floor get a ladder from the ground floor to the top floor. Datapack unchanged apart from the version.
 - **1.1.1**: Stations are placed more reliably at street level: they look for open ground with nothing hollow below (up to 48 blocks away) before falling back, so they no longer land on roofs.
 - **1.1.0**: No building interiors (lighter world). The Arnis options are saved in `src/arnis-args.txt`, which the automatic build also uses.
 
